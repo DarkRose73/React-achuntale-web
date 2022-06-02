@@ -1,0 +1,19 @@
+.logo-navbar {
+  height: 55px;
+}
+
+.card-inicio {
+  width: 40%;
+  margin-top: 20px;
+  color: #000;
+  margin-bottom: 20px;
+  background-color: rgba(255, 128, 0, 0.8);
+}
+
+.background-comentario {
+  background-color: #eadede;
+}
+
+.texto-comentario {
+  font-size: 20px;
+}
