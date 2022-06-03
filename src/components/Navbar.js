@@ -1,5 +1,8 @@
 import React from "react";
 import "./Estilos.css";
+import { Link } from "react-router-dom";
+
+// TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
 const Navbar = () => {
   return (
@@ -16,13 +19,19 @@ const Navbar = () => {
             </a>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link">Inicio</a>
+                <Link className="nav-link" to="/">
+                  Inicio
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Quienes Somos</a>
+                <Link className="nav-link" to="/quienessomos">
+                  Quienes somos
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link">Comprar</a>
+                <Link className="nav-link" to="/comprar">
+                  Comprar
+                </Link>
               </li>
             </ul>
           </div>

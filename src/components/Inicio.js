@@ -1,4 +1,5 @@
 import React from "react";
+import { Comentarios } from "./Comentarios";
 import "./Estilos.css";
 
 const Inicio = () => {
@@ -7,25 +8,18 @@ const Inicio = () => {
       {/* CARD INICIAL */}
       <div className="card mx-auto card-inicio">
         <div className="card-body text-center" style={{ fontSize: "20px" }}>
-          ¡Derrota a tu oponente achuntando la argolla en los ganchos! <br />{" "}
-          <a href="" style={{ color: "#ffffff" }}>
-            Compra aquí
-          </a>
+          ¡Derrota a tu oponente achuntando la argolla en los ganchos!
         </div>
       </div>
 
       {/*FILA DE LA IMAGEN PROMOCIONAL Y EL VIDEO*/}
       <div className="row">
-        <div className="col-sm-6">
-          <div
-            className="card mx-auto bg-dark"
-            // TODO: MOVER ESTILO A CSS
-            style={{ height: "auto", width: "600px", padding: " 4px" }}
-          >
+        <div className="col-md-6">
+          <div className="card mx-auto bg-dark contenedor-imagen-kit">
             <img
               src={require("./images/kitAchuntaleQR.jpeg")}
               className="card-img-top mx-auto"
-              //   MOVER A CSS
+              //   TAMAÑO DE IMAGEN
               style={{ width: "590px" }}
               alt=""
             />
@@ -45,18 +39,14 @@ const Inicio = () => {
             </div>
           </div>
         </div>
-        <div className="col-sm-6">
-          <div
-            className="card mx-auto bg-dark"
-            style={{ width: "fit-content", padding: "2px" }}
-          >
+        {/* VIDEO */}
+        <div className="col-md-6">
+          <div className="card mx-auto bg-dark contenedor-video-promocional">
             <video
               src={require("./images/VideoPromo.mp4")}
               preload="auto"
-              loop="true"
-              controls="true"
               className="card-img-top"
-              //   MOVER A CSS
+              //   TAMAÑO VIDEO
               style={{ height: "500px" }}
             ></video>
           </div>
@@ -64,60 +54,10 @@ const Inicio = () => {
       </div>
 
       {/* SECCIÓN COMENTARIOS */}
-      <div class="row">
+      <div className="row">
         <div className="col-md-9 mx-auto">
-          <div
-            className="card my-5"
-            style={{ backgroundColor: "rgba(255, 128, 0, 0.4)" }}
-          >
-            <div className="row text-center px-3 py-3">
-              <div className="card col-md-3 mx-auto background-comentario">
-                <div className="card-body border-dark mx-auto">
-                  <p className="texto-comentario">
-                    "Genial el producto, me divertí mucho con mis amigos"
-                  </p>
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                </div>
-                <div className="card-footer">
-                  <h6>Joan Salas</h6>
-                </div>
-              </div>
-
-              <div className="card col-md-3 mx-auto background-comentario">
-                <div className="card-body border-dark mx-auto">
-                  <p className="texto-comentario">
-                    "Muy buen producto, pero se demoró mucho el envío a mi casa"
-                  </p>
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starEmpty.png")} alt="" />
-                  <img src={require("./images/starEmpty.png")} alt="" />
-                </div>
-                <div className="card-footer">
-                  <h6>Carlitos Lechuga</h6>
-                </div>
-              </div>
-              <div className="card col-md-3 mx-auto background-comentario">
-                <div className="card-body border-dark mx-auto">
-                  <p className="texto-comentario">
-                    "Muy buen producto, recomendadísimo para los carretes!"
-                  </p>
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                  <img src={require("./images/starFull.png")} alt="" />
-                </div>
-                <div className="card-footer">
-                  <h6>Javiera Guerra</h6>
-                </div>
-              </div>
-            </div>
+          <div className="card my-5 fondo-comentarios">
+            <Comentarios></Comentarios>
           </div>
         </div>
       </div>

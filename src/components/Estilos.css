@@ -17,3 +17,45 @@
 .texto-comentario {
   font-size: 20px;
 }
+
+.contenedor-imagen-kit {
+  height: auto;
+  width: 600px;
+  padding: 4px;
+}
+
+.contenedor-video-promocional {
+  width: fit-content;
+  padding: 2px;
+}
+
+.contenedor-carrusel {
+  background-color: black;
+  border-radius: 10em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  width: 650px;
+}
+
+.contenedor {
+  background-color: black;
+  border-radius: 10em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 850px;
+}
+
+.imagen-carrusel {
+  text-align: center;
+  height: 400px;
+}
+
+.texto-carrusel {
+  color: #f58840;
+}
+
+.fondo-comentarios {
+  background-color: rgba(255, 128, 0, 0.4);
+}
