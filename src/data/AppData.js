@@ -17,8 +17,15 @@ const dataComentarios = [
     puntuacion: 1,
     autor: "Carlos Lechuga",
   },
+  // {
+  //   id: 4,
+  //   texto: "Achúntale nunca falta en mis carretes",
+  //   puntuacion: 5,
+  //   autor: "Esteban Rosas",
+  // },
 ];
 
+//TODO: ARREGLAR LOS ENLACES DE IMAGENES
 // const dataCarrusel = [
 //   {
 //     imagen: require("./components/images/equipo/DavidOjeda.png"),

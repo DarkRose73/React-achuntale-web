@@ -1,6 +1,6 @@
 import React from "react";
 import "./Estilos.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
@@ -19,19 +19,19 @@ const Navbar = () => {
             </a>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <NavLink className="nav-link" to="/">
                   Inicio
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/quienessomos">
+                <NavLink className="nav-link" to="/quienessomos">
                   Quienes somos
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/comprar">
+                <NavLink className="nav-link" to="/comprar">
                   Comprar
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

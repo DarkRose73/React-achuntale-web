@@ -60,7 +60,10 @@ export const Comentarios = () => {
     <div className="container">
       <div className="row text-center px-3 py-3">
         {dataComentarios.map((comentario) => (
-          <div className="card col-md-3 mx-auto background-comentario">
+          <div
+            className="card col-md-3 mx-auto background-comentario"
+            key={comentario.id}
+          >
             <div className="card-body border-dark mx-auto">
               <p className="texto-comentario">{comentario.texto}</p>
               {cargarEstrellas(comentario.puntuacion)}

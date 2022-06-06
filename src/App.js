@@ -3,7 +3,7 @@ import React from "react";
 import Inicio from "./components/Inicio";
 import Comprar from "./components/Comprar";
 import QuienesSomos from "./components/QuienesSomos";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 
 function App() {
@@ -11,11 +11,11 @@ function App() {
     <div>
       <Router>
         <Navbar />
-        <Switch>
-          <Route path="/" exact component={Inicio}></Route>
-          <Route path="/quienessomos" component={QuienesSomos}></Route>
-          <Route path="/comprar" component={Comprar}></Route>
-        </Switch>
+        <Routes>
+          <Route path="/" exact element={<Inicio />}></Route>
+          <Route path="/quienessomos" element={<QuienesSomos />}></Route>
+          <Route path="/comprar" element={<Comprar />}></Route>
+        </Routes>
         <Footer />
       </Router>
     </div>

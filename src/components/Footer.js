@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div>
       <footer>
-        <div className="card-footer mt-3">
+        <div className="card-footer mt-3 mx-auto">
           <div className="row">
             <div className="text-center" style={{ color: "#fff" }}>
               <h1>Síguenos en Instagram</h1>
