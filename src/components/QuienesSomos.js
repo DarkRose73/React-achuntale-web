@@ -1,4 +1,5 @@
 import React from "react";
+import CardInfo from "./CardInfo";
 import { Carrusel } from "./Carrusel";
 
 const QuienesSomos = () => {
@@ -6,12 +7,13 @@ const QuienesSomos = () => {
     <div>
       {/*CARRUSEL DE IMÁGENES*/}
       <div className="row">
-        <div className="col-sm-8 my-2 mx-auto">
-          <div className="contenedor">
-            <div className="contenedor-carrusel"></div>
-            <Carrusel></Carrusel>
-          </div>
+        <div className="col-md-9 my-2 mx-auto">
+          <Carrusel></Carrusel>
         </div>
+      </div>
+
+      <div className="mx-5">
+        <CardInfo />
       </div>
     </div>
   );

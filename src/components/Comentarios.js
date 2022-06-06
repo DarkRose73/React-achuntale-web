@@ -54,6 +54,16 @@ export const Comentarios = () => {
             <img src={require("./images/starEmpty.png")} alt="" />
           </div>
         );
+      default:
+        return (
+          <div>
+            <img src={require("./images/starEmpty.png")} alt="" />
+            <img src={require("./images/starEmpty.png")} alt="" />
+            <img src={require("./images/starEmpty.png")} alt="" />
+            <img src={require("./images/starEmpty.png")} alt="" />
+            <img src={require("./images/starEmpty.png")} alt="" />
+          </div>
+        );
     }
   };
   return (
@@ -65,8 +75,13 @@ export const Comentarios = () => {
             key={comentario.id}
           >
             <div className="card-body border-dark mx-auto">
-              <p className="texto-comentario">{comentario.texto}</p>
-              {cargarEstrellas(comentario.puntuacion)}
+              <div className="row">
+                {cargarEstrellas(comentario.puntuacion)}
+              </div>
+              <br />
+              <div className="row">
+                <p className="texto-comentario">{comentario.texto}</p>
+              </div>
             </div>
             <div className="card-footer">
               <h6>{comentario.autor}</h6>

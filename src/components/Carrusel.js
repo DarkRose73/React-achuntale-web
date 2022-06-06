@@ -58,87 +58,108 @@ const dataCarrusel = [
 export const Carrusel = () => {
   return (
     <div>
-      <div
-        id="carouselExampleInterval"
-        className="carousel slide"
-        data-bs-ride="carousel"
-      >
-        {/* ESTO PUEDE MEJORAR AL HACER PROCESO ITERATIVO */}
-        <div className="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="0"
-            className="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="3"
-            aria-label="Slide 4"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="4"
-            aria-label="Slide 5"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="5"
-            aria-label="Slide 6"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="6"
-            aria-label="Slide 7"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="7"
-            aria-label="Slide 8"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleInterval"
-            data-bs-slide-to="8"
-            aria-label="Slide 9"
-          ></button>
-        </div>
-        <div className="carousel-inner">
-          {dataCarrusel.map((persona) => (
+      <div className="row">
+        {dataCarrusel.map((persona) => (
+          <div className="col-md-4" key={persona.nombre}>
             <div
-              className={persona.clase}
-              data-bs-interval="3000"
-              key={persona.nombre}
+              className="card mb-3 card-quienes-somos"
+              style={{ height: "auto" }}
             >
-              <img src={persona.imagen} alt="..." />
-              <div className="texto-carrusel">
-                <h4>{persona.nombre}</h4>
-                <p>{persona.puesto}</p>
+              <img
+                src={persona.imagen}
+                className="card-img-top"
+                alt="..."
+                style={{ height: "290px" }}
+              />
+              <div className="card-body">
+                <h3 className="card-title text-center">{persona.nombre}</h3>
+                <h6 className="card-text text-center">{persona.puesto}</h6>
               </div>
             </div>
-          ))}
-        </div>
-        <br />
+          </div>
+        ))}
       </div>
     </div>
   );
 };
+
+// <div
+// id="carouselExampleInterval"
+// classNameName="carousel slide"
+// data-bs-ride="carousel"
+// >
+// <div classNameName="carousel-indicators">
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="0"
+//     classNameName="active"
+//     aria-current="true"
+//     aria-label="Slide 1"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="1"
+//     aria-label="Slide 2"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="2"
+//     aria-label="Slide 3"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="3"
+//     aria-label="Slide 4"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="4"
+//     aria-label="Slide 5"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="5"
+//     aria-label="Slide 6"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="6"
+//     aria-label="Slide 7"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="7"
+//     aria-label="Slide 8"
+//   ></button>
+//   <button
+//     type="button"
+//     data-bs-target="#carouselExampleInterval"
+//     data-bs-slide-to="8"
+//     aria-label="Slide 9"
+//   ></button>
+// </div>
+// <div classNameName="carousel-inner">
+//   {dataCarrusel.map((persona) => (
+//     <div
+//       classNameName={persona.clase}
+//       data-bs-interval="3000"
+//       key={persona.nombre}
+//     >
+//       <img src={persona.imagen} alt="..." />
+//       <div classNameName="texto-carrusel">
+//         <h4>{persona.nombre}</h4>
+//         <p>{persona.puesto}</p>
+//       </div>
+//     </div>
+//   ))}
+// </div>
+// <br />
+// </div>

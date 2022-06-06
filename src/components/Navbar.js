@@ -1,6 +1,6 @@
 import React from "react";
 import "./Estilos.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
@@ -10,13 +10,11 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
-            <a className="navbar-brand">
-              <img
-                className="logo-navbar"
-                src={require("./images/logoAchuntaleTransparente.png")}
-                alt=""
-              ></img>
-            </a>
+            <img
+              className="logo-navbar"
+              src={require("./images/logoAchuntaleTransparente.png")}
+              alt=""
+            ></img>
             <ul className="navbar-nav">
               <li className="nav-item">
                 <NavLink className="nav-link" to="/">
@@ -25,7 +23,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/quienessomos">
-                  Quienes somos
+                  ¿Quiénes somos?
                 </NavLink>
               </li>
               <li className="nav-item">
