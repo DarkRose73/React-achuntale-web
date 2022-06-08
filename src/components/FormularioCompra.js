@@ -216,17 +216,9 @@ export default function FormularioCompra() {
         >
           Limpiar
         </button>
-        {/* BOTON INVISIBLE */}
-        <button
-          data-bs-toggle="modal"
-          id="btn-modal"
-          data-bs-target="#staticBackdrop"
-          disabled
-          style={{ opacity: "0" }}
-        ></button>
-        {isOpenModal && (
-          <ModalDireccionEnvio isOpen={isOpenModal} cerrarModal={cerrarModal} />
-        )}
+
+        {/* MODAL */}
+        {<ModalDireccionEnvio isOpen={isOpenModal} cerrarModal={cerrarModal} />}
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Estilos.css";
 import { NavLink } from "react-router-dom";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
 const Navbar = () => {
+  const [sesion, setSesion] = useState(false);
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -32,6 +33,23 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
+            <div className="ms-auto">
+              {sesion ? (
+                <button
+                  className="btn btn-danger"
+                  onClick={() => setSesion(!sesion)}
+                >
+                  Cerrar Sesión
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success"
+                  onClick={() => setSesion(!sesion)}
+                >
+                  Iniciar Sesión
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </nav>

@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ModalDireccionEnvio({ isOpen, cerrarModal }) {
   return (
-    <div>
-      <div className="modal-content">
+    <div className="modal modal-open">
+      <div className="modal-content" style={{ zIndex: "9999" }}>
         <div className="modal-header">
           <h5 className="modal-title mx-auto" id="staticBackdropLabel">
             Datos de envío
