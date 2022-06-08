@@ -25,7 +25,10 @@ export default function CardInfo() {
               <h2>Valores</h2>
             </span>
           </div>
-          <div className="card-body" style={{ height: "180px" }}>
+          <div
+            className="card-body card-quienes-somos-info-body"
+            style={{ height: "180px" }}
+          >
             <ul>
               <li>
                 <h5>Entretención</h5>
