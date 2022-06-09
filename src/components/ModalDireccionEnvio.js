@@ -1,24 +1,17 @@
 import React from "react";
+import "./Modal.css";
 
 export default function ModalDireccionEnvio({ isOpen, cerrarModal }) {
   return (
-    <div className="modal modal-open">
-      <div className="modal-content" style={{ zIndex: "9999" }}>
-        <div className="modal-header">
-          <h5 className="modal-title mx-auto" id="staticBackdropLabel">
-            Datos de envío
-          </h5>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            onClick={cerrarModal}
-          ></button>
-        </div>
+    <div className={`modal-envio ${isOpen && "modal-open"}`}>
+      <div className="modal__dialog">
+        <h1 className="text-dark">Datos de envío</h1>
         <div className="modal-body">
-          <div className="card">
-            <div className="row">
+          <div
+            className="card"
+            style={{ borderColor: "rgba(0, 0, 0, 0)", backgroundColor: "#ccc" }}
+          >
+            <div className="row text-dark">
               <div className="col-md-6">
                 <div className="card-body">
                   <label htmlFor="nombre" className="form-label">
@@ -96,24 +89,12 @@ export default function ModalDireccionEnvio({ isOpen, cerrarModal }) {
             </div>
           </div>
         </div>
-        <div className="modal-footer">
-          <button
-            type="button"
-            id="btn-modal-confirmar"
-            className="btn btn-success btn-outline-dark"
-          >
-            Confirmar
-          </button>
-          <button
-            type="button"
-            id="btn-modal-cancelar"
-            className="btn btn-danger btn-outline-dark"
-            data-bs-dismiss="modal"
-            onClick={cerrarModal}
-          >
-            Cancelar
-          </button>
-        </div>
+        <button className="btn btn-success mt-4" onClick={cerrarModal}>
+          Aceptar
+        </button>
+        <button className="btn btn-danger mt-4" onClick={cerrarModal}>
+          Cerrar
+        </button>
       </div>
     </div>
   );

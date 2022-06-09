@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import ModalDireccionEnvio from "./ModalDireccionEnvio";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const initialState = {
   correo: "",
@@ -82,6 +84,7 @@ export default function FormularioCompra() {
     let errores = [];
     const cantidad = inputCantidad.current.value;
     const correo = inputCorreo.current.value;
+    const MySwal = withReactContent(Swal);
     if (!validarCorreo(correo)) {
       errores.push("Correo incorrecto");
     }
@@ -91,8 +94,17 @@ export default function FormularioCompra() {
 
     //EN CASO DE NO HABER ERRORES MOSTRAR EL MODAL
     if (errores.length === 0) {
-      abrirModal();
-      console.log("mostrar modal");
+      MySwal.fire({
+        title: "Datos ingresados correctamente",
+        text: `¿Los datos ingresados son correctos? Correo: ${correo}, Cantidad de compra: ${cantidad}`,
+        showCancelButton: "true",
+        showConfirmButton: "true",
+        background: "aaa",
+      }).then((respuesta) => {
+        if (respuesta.isConfirmed) {
+          abrirModal();
+        }
+      });
     }
   };
 
