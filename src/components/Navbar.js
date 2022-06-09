@@ -1,11 +1,34 @@
 import React, { useState } from "react";
 import "./Estilos.css";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
 const Navbar = () => {
   const [sesion, setSesion] = useState(false);
+
+  const handleIniciarSesión = () => {
+    const MySwal = withReactContent(Swal);
+    MySwal.fire({
+      title: "Trabajo en proceso",
+      html: ` <h4>Esta función está en proceso de desarrollo, vuelva pronto<br></h4>
+              <span>¿Desea cambiar el estado de sesión de todas formas?</span>
+      `,
+      icon: "warning",
+      showCancelButton: "true",
+      showConfirmButton: "true",
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
+      confirmButtonColor: "green",
+      cancelButtonColor: "red",
+    }).then((respuesta) => {
+      if (respuesta.isConfirmed) {
+        setSesion(!sesion);
+      }
+    });
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -37,14 +60,14 @@ const Navbar = () => {
               {sesion ? (
                 <button
                   className="btn btn-danger"
-                  onClick={() => setSesion(!sesion)}
+                  onClick={() => handleIniciarSesión()}
                 >
                   Cerrar Sesión
                 </button>
               ) : (
                 <button
                   className="btn btn-success"
-                  onClick={() => setSesion(!sesion)}
+                  onClick={() => handleIniciarSesión()}
                 >
                   Iniciar Sesión
                 </button>

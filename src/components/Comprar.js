@@ -28,6 +28,7 @@ const Comprar = () => {
         </div>
       </div>
 
+      {/* TODO:ELIMINAR ESTO */}
       <div
         className="modal fade"
         id="staticBackdrop"

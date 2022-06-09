@@ -3,6 +3,7 @@ import ModalDireccionEnvio from "./ModalDireccionEnvio";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
+//DATOS INICIALES FORMULARIO
 const initialState = {
   correo: "",
   cantidadCompra: 0,
@@ -12,19 +13,22 @@ const initialState = {
 const precioProducto = 12900;
 
 export default function FormularioCompra() {
+  //HOOKS
   const [formulario, setFormulario] = useState(initialState);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const inputCorreo = useRef();
   const inputCantidad = useRef();
 
+  //FUNCIONES
+  //Funcion para validar correo
   const validarCorreo = (correo) => {
     if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(correo)) {
       return true;
     }
     return false;
   };
-
+  //Funciones para abrir y cerrar modal
   const abrirModal = () => {
     setIsOpenModal(true);
   };
@@ -32,6 +36,7 @@ export default function FormularioCompra() {
     setIsOpenModal(false);
   };
 
+  //Handlers de inputs
   const handleClickBotonesCantidad = (cantidadCompra) => {
     const stock = formulario.stock;
     const prevCantidadCompra = formulario.cantidadCompra;
@@ -86,37 +91,50 @@ export default function FormularioCompra() {
     const correo = inputCorreo.current.value;
     const MySwal = withReactContent(Swal);
     if (!validarCorreo(correo)) {
-      errores.push("Correo incorrecto");
+      errores.push("correo");
     }
     if (cantidad <= 0) {
-      errores.push("No se pueden comprar 0 productos");
+      errores.push("cantidad");
     }
 
     //EN CASO DE NO HABER ERRORES MOSTRAR EL MODAL
     if (errores.length === 0) {
       MySwal.fire({
-        title: "Datos ingresados correctamente",
-        text: `¿Los datos ingresados son correctos? Correo: ${correo}, Cantidad de compra: ${cantidad}`,
+        title: "¿Desea confirmar los siguientes datos?",
+        html: `        
+        <strong>Correo:</strong> ${correo}<br/> 
+        <strong>Cantidad de compra:</strong> ${cantidad}<br/>
+        <strong>Precio total:</strong> $${formulario.precioTotalCompra}
+        `,
         showCancelButton: "true",
         showConfirmButton: "true",
+        confirmButtonText: "Sí",
+        cancelButtonText: "No",
+        confirmButtonColor: "green",
+        cancelButtonColor: "red",
         background: "aaa",
+        icon: "question",
       }).then((respuesta) => {
         if (respuesta.isConfirmed) {
           abrirModal();
         }
+      });
+    } else {
+      MySwal.fire({
+        title: "Datos erróneos",
+        icon: "error",
+        text: `Verifique el ingreso de datos en: ${errores.toString()}`,
       });
     }
   };
 
   return (
     <div className="card-body text-center mx-auto">
-      {/* INGRESO DE DATOS */}
       {/* INGRESO CORREO */}
       <div className="input-group" style={{ width: "500px" }}>
         <input
           type="email"
           id="correo"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           autoComplete="off"
           placeholder="Ingrese su correo"
           className="form-control bg-dark"
@@ -230,7 +248,13 @@ export default function FormularioCompra() {
         </button>
 
         {/* MODAL */}
-        {<ModalDireccionEnvio isOpen={isOpenModal} cerrarModal={cerrarModal} />}
+        {
+          <ModalDireccionEnvio
+            isOpen={isOpenModal}
+            cerrarModal={cerrarModal}
+            resetFormulario={handleResetFormulario}
+          />
+        }
       </div>
     </div>
   );
