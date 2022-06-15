@@ -4,7 +4,7 @@ export default function ImagenPromoCarrito() {
   return (
     <div>
       <div
-        className="card mx-auto"
+        className="card"
         style={{
           background: "rgba(0, 0, 0, 0.7)",
           border: "rgba(0, 0, 0, 0)",
@@ -12,7 +12,8 @@ export default function ImagenPromoCarrito() {
       >
         <img
           src={require("./images/allInOne2.png")}
-          className="card-img-top mx-auto"
+          className="card-img-top"
+          style={{ width: "700px" }}
           alt=""
         />
         <div

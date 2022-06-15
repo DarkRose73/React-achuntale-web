@@ -21,8 +21,8 @@ const Navbar = () => {
       showConfirmButton: "true",
       confirmButtonText: "Sí",
       cancelButtonText: "No",
-      confirmButtonColor: "green",
-      cancelButtonColor: "red",
+      confirmButtonColor: "#198754",
+      cancelButtonColor: "#dc3545",
     }).then((respuesta) => {
       if (respuesta.isConfirmed) {
         setSesion(!sesion);

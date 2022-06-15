@@ -1,9 +1,11 @@
 body {
   height: max-content;
+  width: auto;
   background-image: url("/src/components/images/fondo.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   background-color: black;
   background-attachment: fixed;
+  overflow-x: hidden;
 }

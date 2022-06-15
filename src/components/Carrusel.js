@@ -1,8 +1,8 @@
 import React from "react";
-// Import Swiper React components
+// Importar componentes de Swiper React
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
+// Importar estilos de Swiper
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -76,9 +76,12 @@ export default function Carrusel() {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
+        // TODO: ARREGLAR LOS BOTONES DE PAGINATION
+        // pagination={
+        //   {
+        //     clickable: true,
+        //   }
+        // }
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"

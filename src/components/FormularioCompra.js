@@ -36,6 +36,7 @@ export default function FormularioCompra() {
     setIsOpenModal(false);
   };
 
+  //HANDLERS
   //Handlers de inputs
   const handleClickBotonesCantidad = (cantidadCompra) => {
     const stock = formulario.stock;
@@ -73,7 +74,6 @@ export default function FormularioCompra() {
       setFormulario(nuevosValoresFormulario);
     }
   };
-
   const handleResetFormulario = () => {
     setFormulario(initialState);
   };
@@ -97,7 +97,8 @@ export default function FormularioCompra() {
       errores.push("cantidad");
     }
 
-    //EN CASO DE NO HABER ERRORES MOSTRAR EL MODAL
+    //EN CASO DE NO HABER ERRORES CONSULTAR
+    //POR DATOS INGRESADOS Y ABRIR MODAL
     if (errores.length === 0) {
       MySwal.fire({
         title: "¿Desea confirmar los siguientes datos?",
@@ -110,8 +111,8 @@ export default function FormularioCompra() {
         showConfirmButton: "true",
         confirmButtonText: "Sí",
         cancelButtonText: "No",
-        confirmButtonColor: "green",
-        cancelButtonColor: "red",
+        confirmButtonColor: "#198754",
+        cancelButtonColor: "#dc3545",
         background: "aaa",
         icon: "question",
       }).then((respuesta) => {
@@ -119,7 +120,9 @@ export default function FormularioCompra() {
           abrirModal();
         }
       });
-    } else {
+    }
+    //EN CASO DE HABER DATOS ERRÓNEOS
+    else {
       MySwal.fire({
         title: "Datos erróneos",
         icon: "error",
@@ -148,7 +151,7 @@ export default function FormularioCompra() {
       {/* INGRESO CANTIDAD A COMPRAR */}
       <div className="input-group">
         <button
-          className="btn btn-danger btn-outline-dark"
+          className="btn btn-danger"
           id="quitar5"
           style={{ width: "50px" }}
           onClick={() => handleClickBotonesCantidad(-5)}
@@ -156,7 +159,7 @@ export default function FormularioCompra() {
           -5
         </button>
         <button
-          className="btn btn-danger btn-outline-dark"
+          className="btn btn-danger"
           id="quitar"
           style={{ width: "50px", marginRight: "20px" }}
           onClick={() => handleClickBotonesCantidad(-1)}
@@ -177,7 +180,7 @@ export default function FormularioCompra() {
         ></input>
 
         <button
-          className="btn btn-success btn-outline-dark"
+          className="btn btn-success"
           id="agregar"
           style={{ width: "50px", marginLeft: "20px" }}
           onClick={() => handleClickBotonesCantidad(1)}
@@ -185,7 +188,7 @@ export default function FormularioCompra() {
           +1
         </button>
         <button
-          className="btn btn-success btn-outline-dark"
+          className="btn btn-success"
           id="agregar5"
           style={{ width: "50px" }}
           onClick={() => handleClickBotonesCantidad(5)}
@@ -228,7 +231,7 @@ export default function FormularioCompra() {
         <button
           className="btn my-3 mx-auto text-center btn-success"
           id="btn-comprar"
-          style={{ width: "100px", color: "#000" }}
+          style={{ width: "100px" }}
           onClick={handleClickComprar}
         >
           Comprar

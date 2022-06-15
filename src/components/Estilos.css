@@ -114,3 +114,7 @@
   height: auto;
   width: auto;
 }
+
+.footer-personalizado {
+  background-color: rgba(33, 33, 33, 0.8);
+}

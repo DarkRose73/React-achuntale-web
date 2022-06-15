@@ -12,13 +12,13 @@ export default function ImagenPromocionalInicio() {
           alt=""
         />
         <div className="card-body bg-light">
-          <h4 className="card-title">Contenido del kit achúntale</h4>
+          <h4 className="card-title">Contenido del kit Achúntale</h4>
           <ul>
             <li>
               <h5>Vasos</h5>
             </li>
             <li>
-              <h5>Juego achúntale</h5>
+              <h5>Juego Achúntale</h5>
             </li>
             <li>
               <h5>Morral</h5>

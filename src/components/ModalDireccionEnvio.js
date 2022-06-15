@@ -63,11 +63,9 @@ export default function ModalDireccionEnvio({
   const inputDireccion = useRef();
   const inputCiudad = useRef();
   const inputApellido = useRef();
-  const inputCodigoPostal = useRef();
   const selectRegion = useRef();
 
   // ESTO ESTÁ DE MÁS (?)
-  const selectPais = useRef();
   const selectComuna = useRef();
 
   //TODO:useEffect para cargar las comunas
@@ -81,7 +79,6 @@ export default function ModalDireccionEnvio({
     inputDireccion.current.value = "";
     inputCiudad.current.value = "";
     inputApellido.current.value = "";
-    inputCodigoPostal.current.value = null;
     selectRegion.current.value = REGIONES[0].value;
   };
 
@@ -117,9 +114,6 @@ export default function ModalDireccionEnvio({
     }
     if (inputDireccion.current.value === "") {
       errores.push("dirección");
-    }
-    if (inputCodigoPostal.current.value === "") {
-      errores.push("codigo postal");
     }
     if (inputCiudad.current.value === "") {
       errores.push("ciudad del envío");
@@ -288,28 +282,6 @@ export default function ModalDireccionEnvio({
                     ref={inputApellido}
                     onChange={(e) => handleApellido(e.target.current)}
                   />
-                </div>
-                <div className="card-body">
-                  <label className="form-label">Codigo postal *</label>
-                  <input
-                    type="number"
-                    id="codigoPostal"
-                    autoComplete="off"
-                    className="form-control"
-                    value={datosModal.codigoPostal}
-                    ref={inputCodigoPostal}
-                    onChange={(e) => handleCodigoPostal(e.target.current)}
-                  />
-                </div>
-                <div className="card-body">
-                  <label className="form-label">País *</label>
-                  <select
-                    className="form-control"
-                    id="select-pais"
-                    ref={selectPais}
-                  >
-                    <option value="Chile">Chile</option>
-                  </select>
                 </div>
                 <div className="card-body">
                   <label className="form-label">Comuna *</label>
