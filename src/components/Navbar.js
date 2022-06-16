@@ -16,7 +16,8 @@ const Navbar = () => {
       html: ` <h4>Esta función está en proceso de desarrollo, vuelva pronto<br></h4>
               <span>¿Desea cambiar el estado de sesión de todas formas?</span>
       `,
-      icon: "warning",
+      imageUrl: require("./images/work-in-progress.png"),
+      imageHeight: 100,
       showCancelButton: "true",
       showConfirmButton: "true",
       confirmButtonText: "Sí",
