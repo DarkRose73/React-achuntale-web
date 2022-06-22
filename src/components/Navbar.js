@@ -32,7 +32,7 @@ const Navbar = () => {
   };
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+      <nav className="navbar navbar-expand-lg bg-dark navbar-dark" style={{ width: "100vw" }}>
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <img
@@ -57,17 +57,17 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </ul>
-            <div className="ms-auto">
+            <div className="ms-auto pe-4">
               {sesion ? (
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-dark"
                   onClick={() => handleIniciarSesión()}
                 >
                   Cerrar Sesión
                 </button>
               ) : (
                 <button
-                  className="btn btn-success"
+                  className="btn btn-dark"
                   onClick={() => handleIniciarSesión()}
                 >
                   Iniciar Sesión

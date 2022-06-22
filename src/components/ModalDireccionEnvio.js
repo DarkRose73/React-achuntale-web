@@ -77,6 +77,7 @@ export default function ModalDireccionEnvio({
   const selectRegion = useRef();
   const selectComuna = useRef();
 
+  // Reducer de los Handlers del modal
   const reducerModal = (state, action) => {
     switch (action.type) {
 
@@ -211,42 +212,6 @@ export default function ModalDireccionEnvio({
   };
 
   //HANDLERS
-  //ESTOS HANDLERS SE PUEDEN PONER TODOS EN UNO
-
-  // //Handle para el input nombre
-  // const handleNombre = (nombre) => {
-  //   const nuevosValoresFormulario = {
-  //     ...datosModal,
-  //     nombre,
-  //   };
-  //   setDatosModal(nuevosValoresFormulario);
-  // };
-
-  // //Handle para el input direccion
-  // const handleDireccion = (direccion) => {
-  //   const nuevosValoresFormulario = {
-  //     ...datosModal,
-  //     direccion,
-  //   };
-  //   setDatosModal(nuevosValoresFormulario);
-  // };
-
-  // //Handle para el input ciudad
-  // const handleCiudad = (ciudad) => {
-  //   const nuevosValoresFormulario = {
-  //     ...datosModal,
-  //     ciudad,
-  //   };
-  //   setDatosModal(nuevosValoresFormulario);
-  // };
-  // //Handle para el input apellido
-  // const handleApellido = (apellido) => {
-  //   const nuevosValoresFormulario = {
-  //     ...datosModal,
-  //     apellido,
-  //   };
-  //   setDatosModal(nuevosValoresFormulario);
-  // };
 
   //Handle para el select region
   const handleRegion = (region) => {
@@ -295,7 +260,7 @@ export default function ModalDireccionEnvio({
                   </label>
                   <input
                     type="text"
-                    id="nombre"
+                    name="nombre"
                     className="form-control"
                     autoComplete="off"
                     ref={inputNombre}
@@ -307,7 +272,7 @@ export default function ModalDireccionEnvio({
                   <label className="form-label">Apellido *</label>
                   <input
                     type="text"
-                    id="apellido"
+                    name="apellido"
                     className="form-control"
                     autoComplete="off"
                     value={datosModal.apellido}
@@ -321,7 +286,7 @@ export default function ModalDireccionEnvio({
                   </label>
                   <input
                     type="text"
-                    id="direccion"
+                    name="direccion"
                     className="form-control"
                     autoComplete="off"
                     ref={inputDireccion}
@@ -335,7 +300,7 @@ export default function ModalDireccionEnvio({
                   </label>
                   <input
                     type="text"
-                    id="ciudad"
+                    name="ciudad"
                     className="form-control"
                     autoComplete="off"
                     ref={inputCiudad}
@@ -350,8 +315,8 @@ export default function ModalDireccionEnvio({
                     Región
                   </label>
                   <select
-                    name=""
-                    className="form-control"
+                    name="region"
+                    className="form-select"
                     id="select-region"
                     onChange={(e) => handleRegion(e.target.value)}
                     ref={selectRegion}
@@ -363,7 +328,8 @@ export default function ModalDireccionEnvio({
                   <label className="form-label">Comuna </label>
                   <select
                     id="select-comuna"
-                    className="form-control"
+                    name="comuna"
+                    className="form-select"
                     ref={selectComuna}
                     onChange={(e) => handleComuna(e.target.value)}
                   >
@@ -376,11 +342,12 @@ export default function ModalDireccionEnvio({
                 </div>
                 <div className="card-body">
                   <label htmlFor="nombre" className="form-label">
-                    Numero o Block (Opcional)
+                    Número o Block (Opcional)
                   </label>
                   <input
                     type="text"
                     id="numero-block"
+                    name="numero-o-block"
                     className="form-control"
                     autoComplete="off"
                     ref={inputNumeroBlock}
@@ -414,7 +381,9 @@ export default function ModalDireccionEnvio({
             handleAceptar();
           }}
         >
-          Aceptar
+          <h3>
+            Aceptar
+          </h3>
         </button>
 
         <button
@@ -425,7 +394,9 @@ export default function ModalDireccionEnvio({
             cerrarModal();
           }}
         >
-          Cerrar
+          <h3>
+            Cerrar
+          </h3>
         </button>
       </div>
     </div>

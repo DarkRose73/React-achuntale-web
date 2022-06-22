@@ -12,8 +12,14 @@ const Footer = () => {
                 <img src={require("./images/instagram.png")} alt="" />
               </a>
               <h5>@achuntale_cl</h5>
+              <p className="text-light">Web Creada por Joan Salas</p>
+              <a href="https://portafolio-joansalas.netlify.app/" target="_blank" rel="noreferrer">
+                <img src={require("./images/oniPequeño.png")} alt="">
+                </img>
+              </a>
             </div>
           </div>
+
         </div>
       </footer>
     </div>
