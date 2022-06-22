@@ -3,30 +3,57 @@ import "./Estilos.css";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { Dropdown } from "react-bootstrap";
+import ModalIniciarSesion from "./ModalIniciarSesion";
+import Modalregistro from "./ModalRegistro";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
 const Navbar = () => {
   const [sesion, setSesion] = useState(false);
+  const [abrirModalSesion, setAbrirModalSesion] = useState(false)
+  const [abrirModalRegistro, setAbrirModalRegistro] = useState(false)
+  const [usuario, setUsuario] = useState()
 
-  const handleIniciarSesión = () => {
+  const abrirModalSes = () => {
+    setAbrirModalSesion(true);
+  };
+  const cerrarModalSes = () => {
+    setAbrirModalSesion(false);
+  };
+
+  const abrirModalReg = () => {
+    setAbrirModalRegistro(true);
+  };
+  const cerrarModalReg = () => {
+    setAbrirModalRegistro(false);
+  };
+
+  const iniciarSesion = () => {
+    abrirModalSes();
+  }
+
+  const registrar = () => {
+    abrirModalReg();
+  }
+
+  const handleIniciarSesion = () => {
     const MySwal = withReactContent(Swal);
     MySwal.fire({
-      title: "Trabajo en proceso",
-      html: ` <h4>Esta función está en proceso de desarrollo, vuelva pronto<br></h4>
-              <span>¿Desea cambiar el estado de sesión de todas formas?</span>
-      `,
-      imageUrl: require("./images/work-in-progress.png"),
-      imageHeight: 100,
-      showCancelButton: "true",
+      title: "¿Desea iniciar sesión o registrarse?",
+      showDenyButton: "true",
       showConfirmButton: "true",
-      confirmButtonText: "Sí",
-      cancelButtonText: "No",
-      confirmButtonColor: "#198754",
-      cancelButtonColor: "#dc3545",
+      showCloseButton: "true",
+      confirmButtonText: "Iniciar sesión",
+      denyButtonText: "Registrarme",
+      confirmButtonColor: "blue",
+      denyButtonColor: "orange",
     }).then((respuesta) => {
       if (respuesta.isConfirmed) {
-        setSesion(!sesion);
+        iniciarSesion();
+      }
+      if (respuesta.isDenied) {
+        registrar();
       }
     });
   };
@@ -59,21 +86,36 @@ const Navbar = () => {
             </ul>
             <div className="ms-auto pe-4">
               {sesion ? (
-                <button
-                  className="btn btn-dark"
-                  onClick={() => handleIniciarSesión()}
-                >
-                  Cerrar Sesión
-                </button>
+                <Dropdown>
+                  <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                    Cuenta
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => handleIniciarSesion()}>Cerrar sesión</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Cambiar dirección envío</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               ) : (
                 <button
                   className="btn btn-dark"
-                  onClick={() => handleIniciarSesión()}
+                  onClick={() => handleIniciarSesion()}
                 >
                   Iniciar Sesión
                 </button>
               )}
             </div>
+            <ModalIniciarSesion
+              isOpen={abrirModalSesion}
+              cerrarModal={cerrarModalSes}
+              setSesion={setSesion}
+              sesion={sesion}
+              usuario={usuario}
+              setUsuario={setUsuario}
+            />
+            <Modalregistro
+              isOpen={abrirModalRegistro}
+              cerrarModal={cerrarModalReg} />
           </div>
         </div>
       </nav>

@@ -139,7 +139,7 @@ export default function FormularioCompra() {
           type="email"
           id="correo"
           autoComplete="off"
-          placeholder="Ingrese su correo"
+          placeholder="Ingrese el correo de compra"
           className="form-control bg-dark"
           style={{ color: "#EADEDE" }}
           ref={inputCorreo}
