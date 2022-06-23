@@ -10,9 +10,9 @@ const initialState = {
   precioTotalCompra: 0,
   stock: 100,
 };
-const precioProducto = 12900;
+const precioProducto = 13900;
 
-export default function FormularioCompra() {
+export default function FormularioCompra({ usuario }) {
   //HOOKS
   const [formulario, setFormulario] = useState(initialState);
   const [isOpenModal, setIsOpenModal] = useState(false);

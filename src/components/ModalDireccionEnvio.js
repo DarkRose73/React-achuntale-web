@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import "./Modal.css";
 import OpcionesRegion from "./OpcionesRegion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import UsuarioContext from "../contexts/UsuariosContext";
 
 //DATOS INICIALES MODAL
 const initialModal =
@@ -65,6 +66,7 @@ export default function ModalDireccionEnvio({
   cerrarModal,
   resetFormulario,
 }) {
+  const { usuario } = useContext(UsuarioContext)
   //HOOKS
   const [datosModal, setDatosModal] = useState(initialModal);
   const [comunas, setComunas] = useState([]);
@@ -185,7 +187,6 @@ export default function ModalDireccionEnvio({
     }
     if (errores.length === 0) {
       let nroCompra = Math.round(Math.random() * 100);
-      console.log(datosModal)
       MySwal.fire({
         title: "Compra realizada con éxito",
         text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
@@ -242,7 +243,6 @@ export default function ModalDireccionEnvio({
   const handleAceptar = () => {
     validarModal();
   };
-
   return (
     <div className={`modal-envio ${isOpen && "modal-open"}`}>
       <div className="modal__dialog">
@@ -264,7 +264,9 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     ref={inputNombre}
-                    value={datosModal.nombre}
+                    value={
+                      !usuario ? datosModal.nombre : usuario.datos.nombre
+                    }
                     onChange={() => dispatch({ type: TIPO_INGRESO.NOMBRE, payload: inputNombre.current.value })}
                   />
                 </div>
@@ -275,7 +277,9 @@ export default function ModalDireccionEnvio({
                     name="apellido"
                     className="form-control"
                     autoComplete="off"
-                    value={datosModal.apellido}
+                    value={
+                      !usuario ? datosModal.apellido : usuario.datos.apellido
+                    }
                     ref={inputApellido}
                     onChange={() => dispatch({ type: TIPO_INGRESO.APELLIDO, payload: inputApellido.current.value })}
                   />
@@ -290,7 +294,9 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     ref={inputDireccion}
-                    value={datosModal.direccion}
+                    value={
+                      !usuario ? datosModal.direccion : usuario.datos.direccion
+                    }
                     onChange={() => dispatch({ type: TIPO_INGRESO.DIRECCION, payload: inputDireccion.current.value })}
                   />
                 </div>
@@ -304,7 +310,9 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     ref={inputCiudad}
-                    value={datosModal.ciudad}
+                    value={
+                      !usuario ? datosModal.ciudad : usuario.datos.ciudad
+                    }
                     onChange={() => dispatch({ type: TIPO_INGRESO.CIUDAD, payload: inputCiudad.current.value })}
                   />
                 </div>
@@ -320,6 +328,9 @@ export default function ModalDireccionEnvio({
                     id="select-region"
                     onChange={(e) => handleRegion(e.target.value)}
                     ref={selectRegion}
+                    value={
+                      !usuario ? datosModal.region : usuario.datos.region
+                    }
                   >
                     <OpcionesRegion datos={REGIONES}></OpcionesRegion>
                   </select>
@@ -332,6 +343,9 @@ export default function ModalDireccionEnvio({
                     className="form-select"
                     ref={selectComuna}
                     onChange={(e) => handleComuna(e.target.value)}
+                    value={
+                      !usuario ? datosModal.comuna : usuario.datos.comuna
+                    }
                   >
                     {comunas.map((comuna) => (
                       <option value={comuna} key={comuna}>
@@ -351,7 +365,9 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     ref={inputNumeroBlock}
-                    value={datosModal.numeroOBlock}
+                    value={
+                      !usuario ? datosModal.numeroOBlock : usuario.datos.numeroOBlock
+                    }
                     onChange={() => dispatch({ type: TIPO_INGRESO.NUMERO_O_BLOCK_OPCIONAL, payload: inputNumeroBlock.current.value })}
                   />
                 </div>
@@ -366,7 +382,9 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     ref={inputReferencia}
-                    value={datosModal.referencia}
+                    value={
+                      !usuario ? datosModal.referencia : usuario.datos.referencia
+                    }
                     onChange={() => dispatch({ type: TIPO_INGRESO.REFERENCIA_OPCIONAL, payload: inputReferencia.current.value })}
                   />
                 </div>

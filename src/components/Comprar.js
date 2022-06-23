@@ -2,7 +2,7 @@ import React from "react";
 import FormularioCompra from "./FormularioCompra";
 import ImagenPromoCarrito from "./ImagenPromoCarrito";
 
-const Comprar = () => {
+const Comprar = ({ usuario }) => {
   return (
     <div>
       <div className="row mt-4 ">
@@ -20,7 +20,7 @@ const Comprar = () => {
             <div className="text-center">
               <h1 style={{ fontWeight: "700", color: "black" }}>Comprar</h1>
             </div>
-            <FormularioCompra />
+            <FormularioCompra usuario={usuario} />
           </div>
         </div>
         {/* EXTRAER A COMPONENTE */}

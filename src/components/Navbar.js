@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Estilos.css";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -6,14 +6,15 @@ import withReactContent from "sweetalert2-react-content";
 import { Dropdown } from "react-bootstrap";
 import ModalIniciarSesion from "./ModalIniciarSesion";
 import Modalregistro from "./ModalRegistro";
+import UsuarioContext from "../contexts/UsuariosContext";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
 const Navbar = () => {
+  const { usuario, setUsuario } = useContext(UsuarioContext)
   const [sesion, setSesion] = useState(false);
   const [abrirModalSesion, setAbrirModalSesion] = useState(false)
   const [abrirModalRegistro, setAbrirModalRegistro] = useState(false)
-  const [usuario, setUsuario] = useState()
 
   const abrirModalSes = () => {
     setAbrirModalSesion(true);
@@ -39,23 +40,39 @@ const Navbar = () => {
 
   const handleIniciarSesion = () => {
     const MySwal = withReactContent(Swal);
-    MySwal.fire({
-      title: "¿Desea iniciar sesión o registrarse?",
-      showDenyButton: "true",
-      showConfirmButton: "true",
-      showCloseButton: "true",
-      confirmButtonText: "Iniciar sesión",
-      denyButtonText: "Registrarme",
-      confirmButtonColor: "blue",
-      denyButtonColor: "orange",
-    }).then((respuesta) => {
-      if (respuesta.isConfirmed) {
-        iniciarSesion();
-      }
-      if (respuesta.isDenied) {
-        registrar();
-      }
-    });
+    if (!sesion) {
+      MySwal.fire({
+        title: "¿Desea iniciar sesión o registrarse?",
+        showDenyButton: "true",
+        showConfirmButton: "true",
+        showCloseButton: "true",
+        confirmButtonText: "Iniciar sesión",
+        denyButtonText: "Registrarme",
+        confirmButtonColor: "blue",
+        denyButtonColor: "orange",
+      }).then((respuesta) => {
+        if (respuesta.isConfirmed) {
+          iniciarSesion();
+        }
+        if (respuesta.isDenied) {
+          registrar();
+        }
+      });
+    } else {
+      MySwal.fire({
+        title: "¿Está seguro de querer cerrar sesión?",
+        icon: "question",
+        showCancelButton: "true",
+        confirmButtonText: "Sí",
+        cancelButtonText: "No"
+      }).then(respuesta => {
+        if (respuesta.isConfirmed) {
+          setUsuario(null)
+          setSesion(!sesion)
+        }
+      })
+
+    }
   };
   return (
     <div>
@@ -79,7 +96,8 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/comprar">
+                <NavLink className="nav-link" to="/comprar"
+                >
                   Comprar
                 </NavLink>
               </li>

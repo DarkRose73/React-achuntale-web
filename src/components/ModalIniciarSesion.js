@@ -36,6 +36,8 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                         }).then(() => {
                             setUsuario(dataUsuario)
                             cerrarModal()
+                            inputContraseña.current.value = ""
+                            inputCorreo.current.value = ""
                             setSesion(!sesion)
                         })
                     } else {
