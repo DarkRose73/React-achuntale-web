@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import ModalIniciarSesion from "./ModalIniciarSesion";
 import Modalregistro from "./ModalRegistro";
 import UsuarioContext from "../contexts/UsuariosContext";
+import ModalDireccionEnvio from "./ModalDireccionEnvio";
 
 // TODO DAR FUNCIONALIDAD DE "NAVEGACIÓN" AL NAVBAR
 
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [sesion, setSesion] = useState(false);
   const [abrirModalSesion, setAbrirModalSesion] = useState(false)
   const [abrirModalRegistro, setAbrirModalRegistro] = useState(false)
+  const [abrirModalDatos, setAbrirModalDatos] = useState(false)
 
   const abrirModalSes = () => {
     setAbrirModalSesion(true);
@@ -28,6 +30,12 @@ const Navbar = () => {
   };
   const cerrarModalReg = () => {
     setAbrirModalRegistro(false);
+  };
+  const abrirModalDat = () => {
+    setAbrirModalDatos(true);
+  };
+  const cerrarModalDat = () => {
+    setAbrirModalDatos(false);
   };
 
   const iniciarSesion = () => {
@@ -48,8 +56,9 @@ const Navbar = () => {
         showCloseButton: "true",
         confirmButtonText: "Iniciar sesión",
         denyButtonText: "Registrarme",
-        confirmButtonColor: "blue",
+        confirmButtonColor: "black",
         denyButtonColor: "orange",
+        background: "#ddd"
       }).then((respuesta) => {
         if (respuesta.isConfirmed) {
           iniciarSesion();
@@ -64,7 +73,8 @@ const Navbar = () => {
         icon: "question",
         showCancelButton: "true",
         confirmButtonText: "Sí",
-        cancelButtonText: "No"
+        cancelButtonText: "No",
+        background: "#ddd"
       }).then(respuesta => {
         if (respuesta.isConfirmed) {
           setUsuario(null)
@@ -74,6 +84,11 @@ const Navbar = () => {
 
     }
   };
+
+  const handleCambiarDireccionEnvio = () => {
+    abrirModalDat();
+
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-dark navbar-dark" style={{ width: "100vw" }}>
@@ -110,8 +125,8 @@ const Navbar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => handleCambiarDireccionEnvio()}>Cambiar datos de envío</Dropdown.Item>
                     <Dropdown.Item onClick={() => handleIniciarSesion()}>Cerrar sesión</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Cambiar dirección envío</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
@@ -134,6 +149,13 @@ const Navbar = () => {
             <Modalregistro
               isOpen={abrirModalRegistro}
               cerrarModal={cerrarModalReg} />
+
+            <ModalDireccionEnvio
+              isOpen={abrirModalDatos}
+              cerrarModal={cerrarModalDat}
+              sesion={sesion}
+              resetFormulario={null}
+            />
           </div>
         </div>
       </nav>

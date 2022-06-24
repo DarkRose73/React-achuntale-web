@@ -18,7 +18,6 @@ function App() {
     <div>
       <Router>
         <UsuarioContext.Provider value={data}>
-
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Inicio />}></Route>

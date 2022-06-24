@@ -113,7 +113,7 @@ export default function FormularioCompra({ usuario }) {
         cancelButtonText: "No",
         confirmButtonColor: "#198754",
         cancelButtonColor: "#dc3545",
-        background: "aaa",
+        background: "#ddd",
         icon: "question",
       }).then((respuesta) => {
         if (respuesta.isConfirmed) {
@@ -127,6 +127,7 @@ export default function FormularioCompra({ usuario }) {
         title: "Datos erróneos",
         icon: "error",
         text: `Verifique el ingreso de datos en: ${errores.toString()}`,
+        background: "#ddd"
       });
     }
   };

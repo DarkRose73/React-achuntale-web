@@ -4,6 +4,8 @@ import OpcionesRegion from "./OpcionesRegion";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import UsuarioContext from "../contexts/UsuariosContext";
+import * as usuarioService from "./usuariosService"
+import BotonCerrarModal from "./BotonCerrarModal";
 
 //DATOS INICIALES MODAL
 const initialModal =
@@ -18,7 +20,6 @@ const initialModal =
   comuna: "Algarrobo",
 };
 
-//TODO: hacer esto
 const TIPO_INGRESO = {
   NOMBRE: "NOMBRE",
   DIRECCION: "DIRECCION",
@@ -65,11 +66,13 @@ export default function ModalDireccionEnvio({
   isOpen,
   cerrarModal,
   resetFormulario,
+  sesion
 }) {
-  const { usuario } = useContext(UsuarioContext)
+  const { usuario, setUsuario } = useContext(UsuarioContext)
   //HOOKS
   const [datosModal, setDatosModal] = useState(initialModal);
   const [comunas, setComunas] = useState([]);
+  const [envio, setEnvio] = useState(false)
   const inputNombre = useRef();
   const inputDireccion = useRef();
   const inputCiudad = useRef();
@@ -78,6 +81,15 @@ export default function ModalDireccionEnvio({
   const inputReferencia = useRef();
   const selectRegion = useRef();
   const selectComuna = useRef();
+
+  useEffect(() => {
+    if (usuario) {
+      setDatosModal(usuario.datos)
+      // setCambioUsuario(usuario.datos)
+    } else {
+      setDatosModal(initialModal)
+    }
+  }, [usuario, envio])
 
   // Reducer de los Handlers del modal
   const reducerModal = (state, action) => {
@@ -137,8 +149,15 @@ export default function ModalDireccionEnvio({
   const [state, dispatch] = useReducer(reducerModal, initialModal)
 
   useEffect(() => {
-    cargarComuna(REGIONES[0].value);
-  }, []);
+    // En caso de que el usuario tenga sesión activa
+    if (usuario) {
+      cargarComuna(usuario.datos.region)
+    }
+    // En caso de que el usuario no tenga sesión activa
+    else {
+      cargarComuna(REGIONES[0].value);
+    }
+  }, [usuario]);
   //Funcion para reiniciar los valores del modal
   const resetModal = () => {
     inputNombre.current.value = "";
@@ -146,15 +165,16 @@ export default function ModalDireccionEnvio({
     inputCiudad.current.value = "";
     inputApellido.current.value = "";
     selectRegion.current.value = REGIONES[0].value;
-
   };
 
   //FUNCIONES
   //Función para reiniciar los valores de la pagina completa
-  const resetPagina = () => {
+  const resetPagina = async () => {
+    setEnvio(!envio)
     resetModal();
     cerrarModal();
-    resetFormulario();
+    // Si el usuario no ha iniciado sesión se reinicia el formulario de compra
+    if (!sesion) { resetFormulario() }
   };
 
   const cargarComuna = (region) => {
@@ -170,7 +190,7 @@ export default function ModalDireccionEnvio({
     }
   };
 
-  const validarModal = () => {
+  const validarModal = async () => {
     let errores = [];
     const MySwal = withReactContent(Swal);
     if (inputNombre.current.value === "") {
@@ -187,13 +207,28 @@ export default function ModalDireccionEnvio({
     }
     if (errores.length === 0) {
       let nroCompra = Math.round(Math.random() * 100);
-      MySwal.fire({
-        title: "Compra realizada con éxito",
-        text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
-        icon: "success",
-      }).then((resultado) => {
-        resetPagina();
-      });
+      // En caso de que el usuario tenga una sesión activa
+      if (sesion) {
+        await usuarioService.actualizarDireccionEnvio({ id: usuario._id, datos: datosModal })
+        const buscarUsuario = await usuarioService.obtenerUsuarioPorCorreo(usuario.correo)
+        setUsuario(buscarUsuario.data)
+        MySwal.fire({
+          title: "Datos actualizados con éxito",
+          icon: "success",
+        }).then((resultado) => {
+          resetPagina();
+        });
+      }
+      //Mensaje al comprar independiente de la sesion
+      else {
+        MySwal.fire({
+          title: "Compra realizada con éxito",
+          text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
+          icon: "success",
+        }).then((resultado) => {
+          resetPagina();
+        });
+      }
     } else {
       let mensajeError = "";
       let ultimo = errores[errores.length - 1];
@@ -208,6 +243,7 @@ export default function ModalDireccionEnvio({
         title: "Error en el ingreso de datos",
         text: `Ingrese los datos solicitados: ${mensajeError}`,
         icon: "warning",
+        background: "#ddd"
       });
     }
   };
@@ -246,11 +282,18 @@ export default function ModalDireccionEnvio({
   return (
     <div className={`modal-envio ${isOpen && "modal-open"}`}>
       <div className="modal__dialog">
-        <h1 className="text-dark">Datos de envío</h1>
+        <BotonCerrarModal
+          cerrarModal={cerrarModal}
+          tipoModal={"dir_envio"}
+          resetModal={resetModal}
+          setEnvio={setEnvio}
+          envio={envio}
+        ></BotonCerrarModal>
+        <h1 className="text-dark text-center">Datos de envío</h1>
         <div className="modal-body">
           <div
-            className="card"
-            style={{ borderColor: "rgba(0, 0, 0, 0)", backgroundColor: "#ccc" }}
+            className="card text-center"
+            style={{ borderColor: "rgba(0, 0, 0, 0)", backgroundColor: "rgb(242, 165, 50)" }}
           >
             <div className="row text-dark">
               <div className="col-md-6">
@@ -265,7 +308,7 @@ export default function ModalDireccionEnvio({
                     autoComplete="off"
                     ref={inputNombre}
                     value={
-                      !usuario ? datosModal.nombre : usuario.datos.nombre
+                      datosModal.nombre
                     }
                     onChange={() => dispatch({ type: TIPO_INGRESO.NOMBRE, payload: inputNombre.current.value })}
                   />
@@ -278,7 +321,7 @@ export default function ModalDireccionEnvio({
                     className="form-control"
                     autoComplete="off"
                     value={
-                      !usuario ? datosModal.apellido : usuario.datos.apellido
+                      datosModal.apellido
                     }
                     ref={inputApellido}
                     onChange={() => dispatch({ type: TIPO_INGRESO.APELLIDO, payload: inputApellido.current.value })}
@@ -295,7 +338,7 @@ export default function ModalDireccionEnvio({
                     autoComplete="off"
                     ref={inputDireccion}
                     value={
-                      !usuario ? datosModal.direccion : usuario.datos.direccion
+                      datosModal.direccion
                     }
                     onChange={() => dispatch({ type: TIPO_INGRESO.DIRECCION, payload: inputDireccion.current.value })}
                   />
@@ -311,7 +354,7 @@ export default function ModalDireccionEnvio({
                     autoComplete="off"
                     ref={inputCiudad}
                     value={
-                      !usuario ? datosModal.ciudad : usuario.datos.ciudad
+                      datosModal.ciudad
                     }
                     onChange={() => dispatch({ type: TIPO_INGRESO.CIUDAD, payload: inputCiudad.current.value })}
                   />
@@ -329,9 +372,10 @@ export default function ModalDireccionEnvio({
                     onChange={(e) => handleRegion(e.target.value)}
                     ref={selectRegion}
                     value={
-                      !usuario ? datosModal.region : usuario.datos.region
+                      datosModal.region
                     }
                   >
+                    {/* <option>-SELECCIONE-</option> */}
                     <OpcionesRegion datos={REGIONES}></OpcionesRegion>
                   </select>
                 </div>
@@ -344,9 +388,12 @@ export default function ModalDireccionEnvio({
                     ref={selectComuna}
                     onChange={(e) => handleComuna(e.target.value)}
                     value={
-                      !usuario ? datosModal.comuna : usuario.datos.comuna
+                      datosModal.comuna
                     }
                   >
+                    {/* <option>
+                      -SELECCIONE-
+                    </option> */}
                     {comunas.map((comuna) => (
                       <option value={comuna} key={comuna}>
                         {comuna}
@@ -360,13 +407,12 @@ export default function ModalDireccionEnvio({
                   </label>
                   <input
                     type="text"
-                    id="numero-block"
-                    name="numero-o-block"
+                    id="numero-o-block"
                     className="form-control"
                     autoComplete="off"
                     ref={inputNumeroBlock}
                     value={
-                      !usuario ? datosModal.numeroOBlock : usuario.datos.numeroOBlock
+                      datosModal.numeroOBlock
                     }
                     onChange={() => dispatch({ type: TIPO_INGRESO.NUMERO_O_BLOCK_OPCIONAL, payload: inputNumeroBlock.current.value })}
                   />
@@ -383,7 +429,7 @@ export default function ModalDireccionEnvio({
                     autoComplete="off"
                     ref={inputReferencia}
                     value={
-                      !usuario ? datosModal.referencia : usuario.datos.referencia
+                      datosModal.referencia
                     }
                     onChange={() => dispatch({ type: TIPO_INGRESO.REFERENCIA_OPCIONAL, payload: inputReferencia.current.value })}
                   />
@@ -392,30 +438,19 @@ export default function ModalDireccionEnvio({
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-success mt-4 mx-5"
-          style={{ height: "50px", width: "150px" }}
-          onClick={() => {
-            handleAceptar();
-          }}
-        >
-          <h3>
-            Aceptar
-          </h3>
-        </button>
-
-        <button
-          className="btn btn-danger mt-4 mx-5"
-          style={{ height: "50px", width: "150px" }}
-          onClick={() => {
-            resetModal();
-            cerrarModal();
-          }}
-        >
-          <h3>
-            Cerrar
-          </h3>
-        </button>
+        <div className="text-center d-grid ">
+          <button
+            className="btn btn-dark mt-4 "
+            style={{ height: "50px", }}
+            onClick={() => {
+              handleAceptar();
+            }}
+          >
+            <h3>
+              Aceptar
+            </h3>
+          </button>
+        </div>
       </div>
     </div>
   );

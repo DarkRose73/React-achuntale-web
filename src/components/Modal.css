@@ -12,26 +12,26 @@
 }
 
 .modal__dialog {
-  background: #ccc;
-  border-radius: 10%;
+  background: rgb(242, 165, 50);
+  border-radius: 3%;
   padding: 10px;
   width: 600px;
-  height: 620px;
+  height: 650px;
 }
 .modal__sesion {
-  background: #ccc;
-  border-radius: 15%;
+  background: rgb(242, 165, 50);
+  border-radius: 3%;
   padding: 10px;
   width: 550px;
-  height: 390px;
+  height: 410px;
 }
 
 .modal__registro {
-  background: #ccc;
-  border-radius: 10%;
+  background: rgb(242, 165, 50);
+  border-radius: 3%;
   padding: 10px;
   width: 600px;
-  height: 620px;
+  height: 560px;
 }
 
 .modal-open {

@@ -1,12 +1,18 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useRef } from "react";
 import "./Modal.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import * as usuariosService from "./usuariosService"
+import BotonCerrarModal from "./BotonCerrarModal";
 
-const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, setUsuario }) => {
+const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario }) => {
     const inputCorreo = useRef();
     const inputContraseña = useRef();
+
+    const resetModal = () => {
+        inputCorreo.current.value = ""
+        inputContraseña.current.value = ""
+    }
 
     const handleIniciar = async (e) => {
         e.preventDefault()
@@ -31,13 +37,13 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                             title: "Inicio de sesión exitoso",
                             icon: "success",
                             text: "Bienvenid@",
-                            timer: "2000",
-                            showConfirmButton: "false"
+                            timer: "3000",
+                            showConfirmButton: "false",
+                            background: "#ddd"
                         }).then(() => {
                             setUsuario(dataUsuario)
                             cerrarModal()
-                            inputContraseña.current.value = ""
-                            inputCorreo.current.value = ""
+                            resetModal()
                             setSesion(!sesion)
                         })
                     } else {
@@ -45,7 +51,8 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                             title: "Error con los datos",
                             icon: "error",
                             text: "Los datos ingresados no son correctos",
-                            timer: "2000"
+                            timer: "3000",
+                            background: "#ddd"
                         })
                     }
                 } else {
@@ -53,7 +60,8 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                         title: "Error con los datos",
                         icon: "error",
                         text: "Los datos ingresados no son correctos",
-                        timer: "2000"
+                        timer: "3000",
+                        background: "#ddd"
                     })
                 }
             } catch (error) {
@@ -67,9 +75,10 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                 msgError += error + " "
             }
             MySwal.fire({
-                title: "Error",
+                title: "Los datos no pueden estar vacíos",
                 icon: "error",
-                text: `Error en el ingreso de datos: ${msgError}`
+                text: `Los siguientes campos están vacíos: ${msgError}`,
+                background: "#ddd"
             })
         }
     }
@@ -78,16 +87,21 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
     return (
         <div className={`modal-envio ${isOpen && "modal-open"}`}>
             <div className="modal__sesion">
+                <BotonCerrarModal
+                    cerrarModal={cerrarModal}
+                    tipoModal={""}
+                    resetModal={resetModal}
+                ></BotonCerrarModal>
                 <h1 className="text-dark text-center">Inicia sesión en Achúntale</h1>
                 <div className="modal-body">
                     <div
                         className="card"
-                        style={{ borderColor: "rgba(0, 0, 0, 0)", backgroundColor: "#ccc" }}
+                        style={{ borderColor: "rgba(0, 0, 0, 0)", backgroundColor: "rgb(242, 165, 50)" }}
                     >
                         <form>
                             <div className="row text-dark">
-                                <div className="card-body">
-                                    <label htmlFor="correo" className="form-label">
+                                <div className="card-body text-center">
+                                    <label htmlFor="correo" className="form-label" style={{ fontSize: "20px" }}>
                                         Correo
                                     </label>
                                     <input
@@ -100,8 +114,8 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                                 </div>
                             </div>
                             <div className="row text-dark">
-                                <div className="card-body">
-                                    <label htmlFor="contrasenia" className="form-label">
+                                <div className="card-body text-center">
+                                    <label htmlFor="contrasenia" className="form-label" style={{ fontSize: "20px" }}>
                                         Contraseña
                                     </label>
                                     <input
@@ -113,31 +127,16 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, usuario, s
                                     />
                                 </div>
                             </div>
-                            <div className="text-center">
+                            <div className="d-grid">
                                 <button
-                                    className="btn btn-success mx-5 mt-3"
-                                    style={{ width: "100px" }}
+                                    className="btn btn-dark mt-3"
                                     onClick={(e) => handleIniciar(e)}
                                 >
-                                    <h5>
+                                    <h5 className="my-auto">
                                         Aceptar
                                     </h5>
 
                                 </button>
-
-                                <button
-                                    className="btn btn-danger mx-5 mt-3"
-                                    style={{ width: "100px" }}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        cerrarModal()
-                                    }}
-                                >
-                                    <h5>
-                                        Cerrar
-                                    </h5>
-                                </button>
-
                             </div>
                         </form>
 
