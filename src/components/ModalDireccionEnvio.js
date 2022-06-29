@@ -82,10 +82,10 @@ export default function ModalDireccionEnvio({
   const selectRegion = useRef();
   const selectComuna = useRef();
 
+  // Efecto para reiniciar los valores del modal
   useEffect(() => {
     if (usuario) {
       setDatosModal(usuario.datos)
-      // setCambioUsuario(usuario.datos)
     } else {
       setDatosModal(initialModal)
     }
@@ -148,6 +148,7 @@ export default function ModalDireccionEnvio({
   }
   const [state, dispatch] = useReducer(reducerModal, initialModal)
 
+  // Efecto para cargar comunas en base al usuario
   useEffect(() => {
     // En caso de que el usuario tenga sesión activa
     if (usuario) {
@@ -158,6 +159,7 @@ export default function ModalDireccionEnvio({
       cargarComuna(REGIONES[0].value);
     }
   }, [usuario]);
+
   //Funcion para reiniciar los valores del modal
   const resetModal = () => {
     inputNombre.current.value = "";

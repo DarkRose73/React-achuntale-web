@@ -24,7 +24,6 @@ const Navbar = () => {
   const cerrarModalSes = () => {
     setAbrirModalSesion(false);
   };
-
   const abrirModalReg = () => {
     setAbrirModalRegistro(true);
   };
@@ -37,15 +36,12 @@ const Navbar = () => {
   const cerrarModalDat = () => {
     setAbrirModalDatos(false);
   };
-
   const iniciarSesion = () => {
     abrirModalSes();
   }
-
   const registrar = () => {
     abrirModalReg();
   }
-
   const handleIniciarSesion = () => {
     const MySwal = withReactContent(Swal);
     if (!sesion) {
@@ -123,7 +119,6 @@ const Navbar = () => {
                   <Dropdown.Toggle variant="dark" id="dropdown-basic">
                     Cuenta
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={() => handleCambiarDireccionEnvio()}>Cambiar datos de envío</Dropdown.Item>
                     <Dropdown.Item onClick={() => handleIniciarSesion()}>Cerrar sesión</Dropdown.Item>

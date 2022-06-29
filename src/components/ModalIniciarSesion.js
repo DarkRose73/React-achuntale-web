@@ -27,7 +27,9 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
         }
         if (errores.length === 0) {
             try {
+                // Se busca el usuario con el correo ingresado
                 const data = await usuariosService.obtenerUsuarioPorCorreo(inputCorreo.current.value)
+                // En caso de encontrar un usuario se realizan las validaciones
                 if (data) {
                     const dataUsuario = data.data
                     const correoUsuario = dataUsuario.correo
@@ -55,7 +57,9 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
                             background: "#ddd"
                         })
                     }
-                } else {
+                }
+                // En caso de no encontrar usuario se envía un mensaje de error 
+                else {
                     MySwal.fire({
                         title: "Error con los datos",
                         icon: "error",
@@ -65,10 +69,8 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
                     })
                 }
             } catch (error) {
-
+                console.log(error)
             }
-
-
         } else {
             let msgError = ""
             for (const error of errores) {
@@ -82,8 +84,6 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
             })
         }
     }
-
-
     return (
         <div className={`modal-envio ${isOpen && "modal-open"}`}>
             <div className="modal__sesion">

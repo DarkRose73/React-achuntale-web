@@ -41,6 +41,6 @@ export const obtenerUsuarios = async () => {
         const usuarios = await axios.post("http://localhost:4000/api/usuarios")
         return usuarios
     } catch (error) {
-
+        console.log(error)
     }
 }

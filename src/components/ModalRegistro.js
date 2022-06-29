@@ -27,7 +27,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
     const inputContraseñaConfirmar = useRef()
     const MySwal = withReactContent(Swal);
 
-
+    // Función para validar el correo
     const validarCorreo = (correo) => {
         if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(correo)) {
             return true;
@@ -35,17 +35,21 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
         return false;
     };
 
+    // Función para verificar si el correo está en uso
     const correoRepetido = async (correo) => {
         const correoEncontrado = await usuarioService.obtenerUsuarioPorCorreo(correo)
         if (correoEncontrado) return true
         else return false
     }
+
+    // Función para regresar los valores del modal a su estado inicial
     const resetModal = () => {
         inputCorreo.current.value = ""
         inputContraseña.current.value = ""
         inputContraseñaConfirmar.current.value = ""
     }
 
+    // Handler para el boton registrar
     const handleRegistrar = async (e) => {
         e.preventDefault();
         // Validaciones
@@ -70,7 +74,6 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                 errores.push("Las contraseñas no coinciden")
                 //TODO: validar que la contraseña sea fuerte (numeros,letras,simbolos)
             }
-
             if (errores.length === 0) {
                 const datosNuevoUsuario = {
                     ...initialUsuario,
