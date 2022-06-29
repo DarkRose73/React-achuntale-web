@@ -28,7 +28,7 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
         if (errores.length === 0) {
             try {
                 // Se busca el usuario con el correo ingresado
-                const data = await usuariosService.obtenerUsuarioPorCorreo(inputCorreo.current.value)
+                const data = await usuariosService.obtenerUsuarioPorCorreo(inputCorreo.current.value, inputContraseña.current.value)
                 // En caso de encontrar un usuario se realizan las validaciones
                 if (data) {
                     const dataUsuario = data.data

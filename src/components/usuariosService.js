@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export const obtenerUsuarioPorCorreo = async (correoConsulta) => {
+export const obtenerUsuarioPorCorreo = async (correoConsulta, contraseña) => {
     try {
-        const usuarios = await axios.post('http://localhost:4000/api/usuarios/correo', {
-            correo: correoConsulta
+        const usuario = await axios.post('http://localhost:4000/api/usuarios/correo', {
+            correo: correoConsulta,
+            password: contraseña
         })
-        return usuarios
+        return usuario
     } catch (error) {
         console.log(error)
     }

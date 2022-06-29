@@ -66,7 +66,7 @@ export default function ModalDireccionEnvio({
   isOpen,
   cerrarModal,
   resetFormulario,
-  sesion
+  sesion,
 }) {
   const { usuario, setUsuario } = useContext(UsuarioContext)
   //HOOKS
@@ -86,7 +86,8 @@ export default function ModalDireccionEnvio({
   useEffect(() => {
     if (usuario) {
       setDatosModal(usuario.datos)
-    } else {
+    }
+    else {
       setDatosModal(initialModal)
     }
   }, [usuario, envio])
@@ -212,7 +213,7 @@ export default function ModalDireccionEnvio({
       // En caso de que el usuario tenga una sesión activa
       if (sesion) {
         await usuarioService.actualizarDireccionEnvio({ id: usuario._id, datos: datosModal })
-        const buscarUsuario = await usuarioService.obtenerUsuarioPorCorreo(usuario.correo)
+        const buscarUsuario = await usuarioService.obtenerUsuarioPorCorreo(usuario.correo, usuario.password)
         setUsuario(buscarUsuario.data)
         MySwal.fire({
           title: "Datos actualizados con éxito",

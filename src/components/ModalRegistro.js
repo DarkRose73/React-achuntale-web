@@ -35,6 +35,13 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
         return false;
     };
 
+    // Funcion para validar la seguridad de la contraseña
+    const validarContraseña = (contraseña) => {
+        // Por lo menos un numero, una minuscula, una mayúscula y 8 caracteres mínimo
+        var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+        return re.test(contraseña);
+    }
+
     // Función para verificar si el correo está en uso
     const correoRepetido = async (correo) => {
         const correoEncontrado = await usuarioService.obtenerUsuarioPorCorreo(correo)
@@ -69,6 +76,9 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
             }
             if (contraseñaIngresada.length < 8) {
                 errores.push("La contraseña debe tener mínimo 8 caracteres")
+            }
+            if (!validarContraseña(contraseñaIngresada)) {
+                errores.push("Seguridad de la contraseña débil, debe tener al menos una mayúscula, una minúscula y un número")
             }
             if (!(contraseñaIngresada === contraseñaRepetir)) {
                 errores.push("Las contraseñas no coinciden")

@@ -87,7 +87,7 @@ const Navbar = () => {
   }
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-dark navbar-dark" style={{ width: "100vw" }}>
+      <nav className="navbar navbar-expand-lg bg-dark navbar-dark sticky" style={{ width: "100vw" }}>
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <img

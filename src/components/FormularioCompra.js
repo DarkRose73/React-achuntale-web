@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ModalDireccionEnvio from "./ModalDireccionEnvio";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import UsuarioContext from "../contexts/UsuariosContext";
 
 //DATOS INICIALES FORMULARIO
 const initialState = {
@@ -12,14 +13,26 @@ const initialState = {
 };
 const precioProducto = 13900;
 
-export default function FormularioCompra({ usuario }) {
+export default function FormularioCompra() {
   //HOOKS
   const [formulario, setFormulario] = useState(initialState);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { usuario, setUsuario } = useContext(UsuarioContext)
+
+  useEffect(() => {
+    if (usuario) {
+      const nuevosValoresFormulario = {
+        ...formulario,
+        correo: usuario.correo
+      }
+      setFormulario(nuevosValoresFormulario)
+    } else {
+      setFormulario(initialState)
+    }
+  }, [usuario])
 
   const inputCorreo = useRef();
   const inputCantidad = useRef();
-
   //FUNCIONES
   //Funcion para validar correo
   const validarCorreo = (correo) => {
@@ -100,26 +113,76 @@ export default function FormularioCompra({ usuario }) {
     //EN CASO DE NO HABER ERRORES CONSULTAR
     //POR DATOS INGRESADOS Y ABRIR MODAL
     if (errores.length === 0) {
-      MySwal.fire({
-        title: "¿Desea confirmar los siguientes datos?",
-        html: `        
-        <strong>Correo:</strong> ${correo}<br/> 
-        <strong>Cantidad de compra:</strong> ${cantidad}<br/>
-        <strong>Precio total:</strong> $${formulario.precioTotalCompra}
-        `,
-        showCancelButton: "true",
-        showConfirmButton: "true",
-        confirmButtonText: "Sí",
-        cancelButtonText: "No",
-        confirmButtonColor: "#198754",
-        cancelButtonColor: "#dc3545",
-        background: "#ddd",
-        icon: "question",
-      }).then((respuesta) => {
-        if (respuesta.isConfirmed) {
-          abrirModal();
-        }
-      });
+      // En caso de que haya sesión inciada
+      if (usuario) {
+        MySwal.fire({
+          title: "¿Desea confirmar los siguientes datos?",
+          html: `
+          <div class="text-start">        
+          <strong>Correo:</strong> ${correo}<br/> 
+          <strong>Cantidad de compra:</strong> ${cantidad}<br/>
+          <strong>Precio total:</strong> $${formulario.precioTotalCompra}<br/>
+          <strong>Datos de envío:</strong> 
+          <ul class="text-start">
+            <li><strong>Nombre y apellido:</strong> ${usuario.datos.nombre} ${usuario.datos.apellido}</li>
+            <li><strong>Dirección de envío:</strong> ${usuario.datos.direccion}</li>
+            <li><strong>Ciudad:</strong> ${usuario.datos.ciudad}</li>
+            <li><strong>Región:</strong> ${usuario.datos.region}</li>
+            <li><strong>Comuna:</strong> ${usuario.datos.comuna}</li>
+            <li><strong>Numero o block:</strong> ${usuario.datos.numeroOBlock}</li>
+            <li><strong>Referencia:</strong> ${usuario.datos.referencia}</li>
+          </ul>
+          </div>
+          `,
+          showCancelButton: "true",
+          showConfirmButton: "true",
+          showDenyButton: "true",
+          denyButtonText: "Utilizar datos",
+          confirmButtonText: "Modificar datos",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#198754",
+          cancelButtonColor: "#dc3545",
+          denyButtonColor: "#dc9935",
+          background: "#ddd",
+          icon: "question",
+        }).then((respuesta) => {
+          if (respuesta.isConfirmed) {
+            abrirModal();
+          }
+          // En caso de utilizar los datos de envío
+          if (respuesta.isDenied) {
+            let nroCompra = Math.round(Math.random() * 100);
+            MySwal.fire({
+              title: "Compra realizada con éxito",
+              text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
+              icon: "success",
+            }).then((resultado) => {
+            });
+          }
+        });
+      }
+      else {
+        MySwal.fire({
+          title: "¿Desea confirmar los siguientes datos?",
+          html: `        
+          <strong>Correo:</strong> ${correo}<br/> 
+          <strong>Cantidad de compra:</strong> ${cantidad}<br/>
+          <strong>Precio total:</strong> $${formulario.precioTotalCompra}
+          `,
+          showCancelButton: "true",
+          showConfirmButton: "true",
+          confirmButtonText: "Sí",
+          cancelButtonText: "No",
+          confirmButtonColor: "#198754",
+          cancelButtonColor: "#dc3545",
+          background: "#ddd",
+          icon: "question",
+        }).then((respuesta) => {
+          if (respuesta.isConfirmed) {
+            abrirModal();
+          }
+        });
+      }
     }
     //EN CASO DE HABER DATOS ERRÓNEOS
     else {

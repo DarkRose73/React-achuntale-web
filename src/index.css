@@ -8,4 +8,5 @@ body {
   background-color: black;
   background-attachment: fixed;
   overflow-x: hidden;
+  padding-top: 80px;
 }
