@@ -76,12 +76,6 @@ export default function Carrusel() {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        // TODO: ARREGLAR LOS BOTONES DE PAGINATION
-        // pagination={
-        //   {
-        //     clickable: true,
-        //   }
-        // }
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"

@@ -22,6 +22,7 @@ const initialUsuario = {
 
 const Modalregistro = ({ isOpen, cerrarModal }) => {
     const [nuevoUsuario, setNuevoUsuario] = useState(initialUsuario)
+    const [mostrarContraseña, setMostrarContraseña] = useState(false)
     const inputCorreo = useRef()
     const inputContraseña = useRef()
     const inputContraseñaConfirmar = useRef()
@@ -138,8 +139,9 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                                     <input
                                         type="text"
                                         name="correo"
-                                        className="form-control"
+                                        className="form-control text-center mx-auto"
                                         autoComplete="off"
+                                        style={{ width: "55%" }}
                                         ref={inputCorreo}
                                         onChange={(e) => {
 
@@ -148,26 +150,55 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                                     <label htmlFor="contraseña" className="form-label mt-3" style={{ fontSize: "20px" }}>
                                         Contraseña
                                     </label>
-                                    <input
-                                        type="password"
-                                        name="contraseña"
-                                        className="form-control"
-                                        autoComplete="off"
-                                        ref={inputContraseña}
-                                    />
+                                    {
+                                        mostrarContraseña ? (<input
+                                            type="text"
+                                            name="contraseña"
+                                            className="form-control text-center mx-auto"
+                                            style={{ width: "55%" }}
+                                            autoComplete="off"
+                                            ref={inputContraseña}
+                                        />) : (<input
+                                            type="password"
+                                            name="contraseña"
+                                            className="form-control text-center mx-auto"
+                                            style={{ width: "55%" }}
+                                            autoComplete="off"
+                                            ref={inputContraseña}
+                                        />)
+                                    }
                                     <label htmlFor="contraseñaConfirmar" className="form-label mt-3" style={{ fontSize: "20px" }}>
                                         Confirmar contraseña
                                     </label>
-                                    <input
-                                        type="password"
-                                        name="contraseñaConfirmar"
-                                        className="form-control"
-                                        autoComplete="off"
-                                        ref={inputContraseñaConfirmar}
-                                    />
-                                    <div className="d-grid gap-2 py-5">
-                                        <button className="btn btn-dark"
-                                            style={{ fontSize: "24px" }}
+                                    {
+                                        mostrarContraseña ? (<input
+                                            type="text"
+                                            name="confirmarContraseña"
+                                            className="form-control text-center mx-auto"
+                                            style={{ width: "55%" }}
+                                            autoComplete="off"
+                                            ref={inputContraseñaConfirmar}
+                                        />) : (<input
+                                            type="password"
+                                            name="confirmarContraseña"
+                                            className="form-control text-center mx-auto"
+                                            style={{ width: "55%" }}
+                                            autoComplete="off"
+                                            ref={inputContraseñaConfirmar}
+                                        />)
+                                    }
+                                    <button className="btn mt-2"
+                                        onClick={
+                                            (e) => {
+                                                e.preventDefault();
+                                                setMostrarContraseña(!mostrarContraseña)
+                                            }
+                                        }>
+                                        Mostrar contraseña
+                                    </button>
+                                    <div className="d-grid gap-2 py-4">
+                                        <button className="btn btn-dark mx-auto"
+                                            style={{ fontSize: "24px", width: "85%" }}
                                             onClick={(e) => { handleRegistrar(e) }}>Registrar</button>
                                     </div>
                                 </form>

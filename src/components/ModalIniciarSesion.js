@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./Modal.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -6,6 +6,7 @@ import * as usuariosService from "./usuariosService"
 import BotonCerrarModal from "./BotonCerrarModal";
 
 const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario }) => {
+    const [mostrarContraseña, setMostrarContraseña] = useState(false)
     const inputCorreo = useRef();
     const inputContraseña = useRef();
 
@@ -107,33 +108,59 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
                                     <input
                                         type="text"
                                         name="correo"
-                                        className="form-control"
+                                        className="form-control text-center mx-auto"
+                                        style={{ width: "55%" }}
                                         autoComplete="off"
                                         ref={inputCorreo}
                                     />
                                 </div>
                             </div>
                             <div className="row text-dark">
-                                <div className="card-body text-center">
+                                <div className="card-body text-center pb-2">
                                     <label htmlFor="contrasenia" className="form-label" style={{ fontSize: "20px" }}>
                                         Contraseña
                                     </label>
-                                    <input
-                                        type="password"
-                                        name="contrasenia"
-                                        className="form-control"
-                                        autoComplete="on"
-                                        ref={inputContraseña}
-                                    />
+                                    {
+                                        mostrarContraseña
+                                            ? (<input
+                                                type="text"
+                                                name="contrasenia"
+                                                className="form-control text-center mx-auto"
+                                                style={{ width: "55%" }}
+                                                autoComplete="on"
+                                                ref={inputContraseña}
+                                            />)
+                                            : (<input
+                                                type="password"
+                                                name="contrasenia"
+                                                className="form-control text-center mx-auto"
+                                                style={{ width: "55%" }}
+                                                autoComplete="on"
+                                                ref={inputContraseña}
+                                            />)
+                                    }
                                 </div>
+                            </div>
+                            <div className="text-center">
+                                <button className="btn pt-0"
+                                    onClick={
+                                        (e) => {
+                                            e.preventDefault();
+                                            setMostrarContraseña(!mostrarContraseña)
+                                        }
+                                    }>
+                                    Mostrar contraseña
+                                </button>
+
                             </div>
                             <div className="d-grid">
                                 <button
-                                    className="btn btn-dark mt-3"
+                                    className="btn btn-dark mt-3 mx-auto"
+                                    style={{ width: "85%" }}
                                     onClick={(e) => handleIniciar(e)}
                                 >
                                     <h5 className="my-auto">
-                                        Aceptar
+                                        Iniciar sesión
                                     </h5>
 
                                 </button>

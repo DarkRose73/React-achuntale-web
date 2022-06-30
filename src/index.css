@@ -10,3 +10,7 @@ body {
   overflow-x: hidden;
   padding-top: 80px;
 }
+
+:root {
+  --swiper-theme-color: orange !important;
+}
