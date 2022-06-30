@@ -48,6 +48,20 @@ export default function FormularioCompra() {
   const cerrarModal = () => {
     setIsOpenModal(false);
   };
+  const validarDatosUsuario = (usuario) => {
+    let flag = true;
+    if (usuario.datos.nombre === "") {
+      flag = false
+    }
+    if (usuario.datos.apellido === "") {
+      flag = false
+    } if (usuario.datos.direccion === "") {
+      flag = false
+    } if (usuario.datos.ciudad === "") {
+      flag = false
+    }
+    return flag
+  }
 
   //HANDLERS
   //Handlers de inputs
@@ -88,7 +102,11 @@ export default function FormularioCompra() {
     }
   };
   const handleResetFormulario = () => {
-    setFormulario(initialState);
+    if (usuario) {
+      setFormulario({ ...initialState, correo: usuario.correo });
+    } else {
+      setFormulario(initialState);
+    }
   };
   const handleInputCorreo = (valor) => {
     const nuevosValoresFormulario = {
@@ -116,53 +134,69 @@ export default function FormularioCompra() {
       // En caso de que haya sesión inciada
       if (usuario) {
         MySwal.fire({
+          customClass: {
+            denyButton: "swalBotonesCompra swalBotonesConfirmar",
+            confirmButton: "swalBotonesCompra swalBotonesConfirmar",
+            cancelButton: "swalBotonesCompra"
+          },
           title: "¿Desea confirmar los siguientes datos?",
           html: `
-          <div class="text-start">        
-          <strong>Correo:</strong> ${correo}<br/> 
-          <strong>Cantidad de compra:</strong> ${cantidad}<br/>
-          <strong>Precio total:</strong> $${formulario.precioTotalCompra}<br/>
-          <strong>Datos de envío:</strong> 
-          <ul class="text-start">
-            <li><strong>Nombre y apellido:</strong> ${usuario.datos.nombre} ${usuario.datos.apellido}</li>
-            <li><strong>Dirección de envío:</strong> ${usuario.datos.direccion}</li>
-            <li><strong>Ciudad:</strong> ${usuario.datos.ciudad}</li>
-            <li><strong>Región:</strong> ${usuario.datos.region}</li>
-            <li><strong>Comuna:</strong> ${usuario.datos.comuna}</li>
-            <li><strong>Numero o block:</strong> ${usuario.datos.numeroOBlock}</li>
-            <li><strong>Referencia:</strong> ${usuario.datos.referencia}</li>
-          </ul>
+          <div class="text-start">
+            <strong>Correo:</strong> ${correo}<br/> 
+            <strong>Cantidad de compra:</strong> ${cantidad}<br/>
+            <strong>Precio total:</strong> $${formulario.precioTotalCompra}<br/>
+            <strong>Datos de envío:</strong><br/>
+            <div class="card card-body text-dark" style="background-color: rgb(242, 165, 50);border-color:000">
+              <ul class="text-start">
+                <li><strong>Nombre y apellido:</strong> ${usuario.datos.nombre || 'SIN DATOS'} ${usuario.datos.apellido}</li>
+                <li><strong>Dirección de envío:</strong> ${usuario.datos.direccion || 'SIN DATOS'}</li>
+                <li><strong>Ciudad:</strong> ${usuario.datos.ciudad || 'SIN DATOS'}</li>
+                <li><strong>Región:</strong> ${usuario.datos.region || 'SIN DATOS'}</li>
+                <li><strong>Comuna:</strong> ${usuario.datos.comuna || 'SIN DATOS'}</li>
+              </ul>
+            </div> 
           </div>
           `,
           showCancelButton: "true",
           showConfirmButton: "true",
           showDenyButton: "true",
-          denyButtonText: "Utilizar datos",
-          confirmButtonText: "Modificar datos",
+          denyButtonText: "Comprar para mí",
+          confirmButtonText: "Regalar",
           cancelButtonText: "Cancelar",
-          confirmButtonColor: "#198754",
           cancelButtonColor: "#dc3545",
-          denyButtonColor: "#dc9935",
           background: "#ddd",
-          icon: "question",
         }).then((respuesta) => {
           if (respuesta.isConfirmed) {
             abrirModal();
           }
           // En caso de utilizar los datos de envío
           if (respuesta.isDenied) {
-            let nroCompra = Math.round(Math.random() * 100);
-            MySwal.fire({
-              title: "Compra realizada con éxito",
-              text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
-              icon: "success",
-            }).then((resultado) => {
-            });
+            //Comprobar que los datos de envio no esten vacios
+            if (validarDatosUsuario(usuario)) {
+              let nroCompra = Math.round(Math.random() * 100);
+              MySwal.fire({
+                customClass: { confirmButton: "swalBotonesConfirmar" },
+                title: "Compra realizada con éxito",
+                text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
+                icon: "success",
+              }).then((resultado) => {
+              });
+            } else {
+              MySwal.fire({
+                customClass: { confirmButton: "swalBotonesConfirmar" },
+                title: "Error, los datos de envío no pueden estar vacíos",
+                icon: "warning",
+
+              })
+            }
           }
         });
       }
       else {
         MySwal.fire({
+          customClass: {
+            confirmButton: "swalBtnColorIngresar"
+          },
           title: "¿Desea confirmar los siguientes datos?",
           html: `        
           <strong>Correo:</strong> ${correo}<br/> 
@@ -171,9 +205,9 @@ export default function FormularioCompra() {
           `,
           showCancelButton: "true",
           showConfirmButton: "true",
-          confirmButtonText: "Sí",
+          confirmButtonText: "Sí ",
           cancelButtonText: "No",
-          confirmButtonColor: "#198754",
+          confirmButtonColor: "#000",
           cancelButtonColor: "#dc3545",
           background: "#ddd",
           icon: "question",
@@ -187,6 +221,7 @@ export default function FormularioCompra() {
     //EN CASO DE HABER DATOS ERRÓNEOS
     else {
       MySwal.fire({
+        customClass: { confirmButton: "swalBotonesConfirmar" },
         title: "Datos erróneos",
         icon: "error",
         text: `Verifique el ingreso de datos en: ${errores.toString()}`,
@@ -293,9 +328,9 @@ export default function FormularioCompra() {
       >
         {/* BOTONES DEL FOOTER, PARA REALIZAR COMPRA O LIMPIAR */}
         <button
-          className="btn my-3 mx-auto text-center btn-success"
+          className="btn my-3 mx-auto text-center"
           id="btn-comprar"
-          style={{ width: "100px" }}
+          style={{ width: "100px", color: "orange", backgroundColor: "#000" }}
           onClick={handleClickComprar}
         >
           Comprar

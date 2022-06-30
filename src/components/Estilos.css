@@ -124,3 +124,24 @@
   top: 0;
   z-index: 999;
 }
+
+.swal2-styled.swal2-confirm.swalBtnColorIngresar {
+  color: orange;
+}
+.swal2-styled.swal2-deny.swalBtnColorRegistrar {
+  color: #000000;
+}
+
+.swalBotonesCompra {
+  width: 45%;
+}
+
+.swal2-styled.swal2-deny.swalBotonesConfirmar {
+  background-color: #000;
+  color: orange;
+}
+
+.swal2-styled.swal2-confirm.swalBotonesConfirmar {
+  background-color: #000;
+  color: orange;
+}

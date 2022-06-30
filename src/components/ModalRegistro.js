@@ -64,6 +64,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
         // Validar correo existente
         if (await correoRepetido(inputCorreo.current.value)) {
             MySwal.fire({
+                customClass: { confirmButton: "swalBotonesConfirmar" },
                 title: "Error, correo ya en uso"
             })
         } else {
@@ -83,7 +84,6 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
             }
             if (!(contraseñaIngresada === contraseñaRepetir)) {
                 errores.push("Las contraseñas no coinciden")
-                //TODO: validar que la contraseña sea fuerte (numeros,letras,simbolos)
             }
             if (errores.length === 0) {
                 const datosNuevoUsuario = {
@@ -94,6 +94,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                 setNuevoUsuario(datosNuevoUsuario)
                 await usuarioService.crearUsuario(datosNuevoUsuario)
                 MySwal.fire({
+                    customClass: { confirmButton: "swalBotonesConfirmar" },
                     icon: "success",
                     title: "usuario creado",
                     background: "#ddd"
@@ -101,6 +102,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                     resetModal()
                     cerrarModal()
                     MySwal.fire({
+                        customClass: { confirmButton: "swalBotonesConfirmar" },
                         title: "Recordatorio",
                         icon: "info",
                         text: "Recuerda agregar tus datos de envío al iniciar sesión",
@@ -113,6 +115,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                     mensajeError += `${mensaje}<br />`
                 }
                 MySwal.fire({
+                    customClass: { confirmButton: "swalBotonesConfirmar" },
                     title: "Datos no válidos",
                     html: `${mensajeError}`,
                 })

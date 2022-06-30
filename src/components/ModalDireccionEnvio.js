@@ -216,6 +216,7 @@ export default function ModalDireccionEnvio({
         const buscarUsuario = await usuarioService.obtenerUsuarioPorCorreo(usuario.correo, usuario.password)
         setUsuario(buscarUsuario.data)
         MySwal.fire({
+          customClass: { confirmButton: "swalBotonesConfirmar" },
           title: "Datos actualizados con éxito",
           icon: "success",
         }).then((resultado) => {
@@ -225,6 +226,7 @@ export default function ModalDireccionEnvio({
       //Mensaje al comprar independiente de la sesion
       else {
         MySwal.fire({
+          customClass: { confirmButton: "swalBotonesConfirmar" },
           title: "Compra realizada con éxito",
           text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
           icon: "success",
@@ -243,6 +245,7 @@ export default function ModalDireccionEnvio({
         }
       }
       MySwal.fire({
+        customClass: { confirmButton: "swalBotonesConfirmar" },
         title: "Error en el ingreso de datos",
         text: `Ingrese los datos solicitados: ${mensajeError}`,
         icon: "warning",
@@ -443,8 +446,8 @@ export default function ModalDireccionEnvio({
         </div>
         <div className="text-center d-grid ">
           <button
-            className="btn btn-dark mt-4 "
-            style={{ height: "50px", }}
+            className="btn btn-dark mt-4 mx-auto"
+            style={{ height: "50px", width: "85%" }}
             onClick={() => {
               handleAceptar();
             }}

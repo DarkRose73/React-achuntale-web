@@ -46,6 +46,10 @@ const Navbar = () => {
     const MySwal = withReactContent(Swal);
     if (!sesion) {
       MySwal.fire({
+        customClass: {
+          confirmButton: "swalBtnColorIngresar",
+          denyButton: "swalBtnColorRegistrar"
+        },
         title: "¿Desea iniciar sesión o registrarse?",
         showDenyButton: "true",
         showConfirmButton: "true",
@@ -65,11 +69,13 @@ const Navbar = () => {
       });
     } else {
       MySwal.fire({
+        customClass: { confirmButton: "swalBotonesConfirmar" },
         title: "¿Está seguro de querer cerrar sesión?",
         icon: "question",
         showCancelButton: "true",
         confirmButtonText: "Sí",
         cancelButtonText: "No",
+        cancelButtonColor: "#dc3545",
         background: "#ddd"
       }).then(respuesta => {
         if (respuesta.isConfirmed) {
