@@ -3,6 +3,7 @@ import ModalDireccionEnvio from "./ModalDireccionEnvio";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import UsuarioContext from "../contexts/UsuariosContext";
+import * as ComprasService from "./comprasService"
 
 //DATOS INICIALES FORMULARIO
 const initialState = {
@@ -115,7 +116,7 @@ export default function FormularioCompra() {
     };
     setFormulario(nuevosValoresFormulario);
   };
-  const handleClickComprar = () => {
+  const handleClickComprar = async () => {
     // VALIDACIONES DEL FORMULARIO
     let errores = [];
     const cantidad = inputCantidad.current.value;
@@ -173,13 +174,23 @@ export default function FormularioCompra() {
           if (respuesta.isDenied) {
             //Comprobar que los datos de envio no esten vacios
             if (validarDatosUsuario(usuario)) {
-              let nroCompra = Math.round(Math.random() * 100);
+              const datosCompra = {
+                correoComprador: usuario.correo,
+                cantidadCompra: Number(inputCantidad.current.value),
+                totalCompra: Number(formulario.precioTotalCompra),
+                datosComprador: usuario.datos,
+                estadoCompra: true
+              }
+              const nroCompra = ComprasService.crearCompra(datosCompra);
+
+              // TODO arreglar esto
               MySwal.fire({
                 customClass: { confirmButton: "swalBotonesConfirmar" },
                 title: "Compra realizada con éxito",
-                text: `Gracias por comprar en Achúntale, tu número de orden es: ${nroCompra}`,
+                text: `Gracias por comprar en Achúntale`,
                 icon: "success",
               }).then((resultado) => {
+
               });
             } else {
               MySwal.fire({

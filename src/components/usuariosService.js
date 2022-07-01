@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Obtener un usuario en base a un correo
 export const obtenerUsuarioPorCorreo = async (correoConsulta, contraseña) => {
     try {
         const usuario = await axios.post('http://localhost:4000/api/usuarios/correo', {
@@ -12,6 +13,7 @@ export const obtenerUsuarioPorCorreo = async (correoConsulta, contraseña) => {
     }
 }
 
+// Actualización de datos de envío para un usuario
 export const actualizarDireccionEnvio = async (usuario) => {
     try {
         const usuarioActualizado = await axios.put("http://localhost:4000/api/usuarios", {
@@ -24,6 +26,7 @@ export const actualizarDireccionEnvio = async (usuario) => {
     }
 }
 
+// Registro de usuario
 export const crearUsuario = async (usuario) => {
     try {
         const nuevoUsuario = await axios.post("http://localhost:4000/api/usuarios", {
@@ -39,7 +42,7 @@ export const crearUsuario = async (usuario) => {
 
 export const obtenerUsuarios = async () => {
     try {
-        const usuarios = await axios.post("http://localhost:4000/api/usuarios")
+        const usuarios = await axios.get("http://localhost:4000/api/usuarios")
         return usuarios
     } catch (error) {
         console.log(error)
