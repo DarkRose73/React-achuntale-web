@@ -38,7 +38,7 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
 
     // Funcion para validar la seguridad de la contraseña
     const validarContraseña = (contraseña) => {
-        // Por lo menos un numero, una minuscula, una mayúscula y 8 caracteres mínimo
+        // Por lo menos un numero, una minuscula, una mayúscula y un largo de 8 caracteres
         var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
         return re.test(contraseña);
     }
@@ -71,8 +71,9 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
             const correoIngresado = inputCorreo.current.value
             const contraseñaIngresada = inputContraseña.current.value
             const contraseñaRepetir = inputContraseñaConfirmar.current.value
-
             let errores = []
+
+            // Validaciones
             if (!validarCorreo(correoIngresado)) {
                 errores.push("Correo no válido")
             }
@@ -86,13 +87,17 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                 errores.push("Las contraseñas no coinciden")
             }
             if (errores.length === 0) {
+                // Crear un objeto de usuario
                 const datosNuevoUsuario = {
                     ...initialUsuario,
                     correo: inputCorreo.current.value,
                     password: inputContraseña.current.value
                 }
+                // Guardar el nuevo usuario en la BD
                 setNuevoUsuario(datosNuevoUsuario)
                 await usuarioService.crearUsuario(datosNuevoUsuario)
+
+                // Mensaje de éxito
                 MySwal.fire({
                     customClass: { confirmButton: "swalBotonesConfirmar" },
                     icon: "success",
@@ -109,7 +114,9 @@ const Modalregistro = ({ isOpen, cerrarModal }) => {
                         background: "#ddd"
                     })
                 })
-            } else {
+            }
+            // Mensaje de error 
+            else {
                 let mensajeError = ""
                 for (const mensaje of errores) {
                     mensajeError += `${mensaje}<br />`

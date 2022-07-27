@@ -196,6 +196,7 @@ export default function ModalDireccionEnvio({
   const validarModal = async () => {
     let errores = [];
     const MySwal = withReactContent(Swal);
+    // Validar campos vacíos
     if (inputNombre.current.value === "") {
       errores.push("nombre");
     }

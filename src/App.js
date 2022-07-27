@@ -16,7 +16,9 @@ function App() {
   const data = { usuario, setUsuario }
   return (
     <div>
+      {/* Router se utiliza para redireccionar páginas en React */}
       <Router>
+        {/* Contexto para poder utilizar data del usuario */}
         <UsuarioContext.Provider value={data}>
           <Navbar />
           <Routes>
@@ -27,7 +29,6 @@ function App() {
           <br />
           <Footer />
         </UsuarioContext.Provider>
-
       </Router>
     </div>
   );

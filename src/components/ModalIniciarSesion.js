@@ -10,6 +10,7 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
     const inputCorreo = useRef();
     const inputContraseña = useRef();
 
+    // Función para reiniciar la data del modal
     const resetModal = () => {
         inputCorreo.current.value = ""
         inputContraseña.current.value = ""
@@ -17,9 +18,9 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
 
     const handleIniciar = async (e) => {
         e.preventDefault()
-        // TODO: Validar que los campos no sean vacios
         const MySwal = withReactContent(Swal);
         let errores = []
+        // Validación de datos ingresados
         if (inputCorreo.current.value === "" || !inputCorreo.current.value) {
             errores.push("correo")
         }
@@ -35,7 +36,9 @@ const ModalIniciarSesion = ({ isOpen, cerrarModal, setSesion, sesion, setUsuario
                     const dataUsuario = data.data
                     const correoUsuario = dataUsuario.correo
                     const contraseniaUsuario = dataUsuario.password
+                    // Se valida que los datos de contrasseña y correo coincidan
                     if (correoUsuario === inputCorreo.current.value && contraseniaUsuario === inputContraseña.current.value) {
+                        // Mensaje de inicio de sesión
                         MySwal.fire({
                             title: "Inicio de sesión exitoso",
                             icon: "success",
